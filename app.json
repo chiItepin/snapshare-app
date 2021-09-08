@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "MyTSProject",
-    "slug": "MyTSProject",
+    "name": "snapshare-app",
+    "slug": "snapshare-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
