@@ -7,8 +7,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    paddingVertical: 14,
-    paddingHorizontal: 22,
+    padding: 12,
+  },
+  containerNoPadding: {
+    flex: 1,
+    justifyContent: 'flex-start',
   },
   loginCard: {
     flex: 1,
@@ -19,6 +22,7 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     paddingVertical: 12,
+    paddingHorizontal: 5,
     width: '100%',
   },
 });

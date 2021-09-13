@@ -11,8 +11,7 @@ import {
 import { HeaderBackButton } from '@react-navigation/elements';
 import { connect } from 'react-redux';
 import { IState } from '../reducer';
-import Home from '../screens/Home';
-import Home2 from '../screens/Home2';
+import PostsList from '../screens/PostsList';
 import Login from '../screens/user/Login';
 import Account from '../screens/user/Account';
 import IUser from '../screens/templates/user';
@@ -68,23 +67,12 @@ const NavigationDrawerStructure: FunctionComponent<IPropsDrawerStructure> = ({
   </View>
 );
 
-const HomeStack: FunctionComponent<IPropsStack> = ({ navigation }: IPropsStack) => (
-  <Stack.Navigator
-    initialRouteName="Home"
-    screenOptions={stackOptions(navigation)}
-  >
-    <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
-    <Stack.Screen name="Home2" component={Home2} options={{ title: 'Home2' }} />
-  </Stack.Navigator>
-);
-
 const PostsStack: FunctionComponent<IPropsStack> = ({ navigation }: IPropsStack) => (
   <Stack.Navigator
-    initialRouteName="Home"
+    initialRouteName="PostsList"
     screenOptions={stackOptions(navigation)}
   >
-    <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
-    <Stack.Screen name="Home2" component={Home2} options={{ title: 'Home2' }} />
+    <Stack.Screen name="PostsList" component={PostsList} options={{ title: 'Home' }} />
   </Stack.Navigator>
 );
 
@@ -114,12 +102,11 @@ const Navigation: FunctionComponent<IPropsMainNavigation> = ({
   user,
 }: IPropsMainNavigation) => (
   <Drawer.Navigator
-    initialRouteName={!user.token ? 'LoginStack' : 'HomeStack'}
+    initialRouteName={!user.token ? 'LoginStack' : 'PostsStack'}
     screenOptions={{
       headerShown: false,
     }}
   >
-    <Drawer.Screen name="HomeStack" component={HomeStack} options={{ drawerLabel: 'Home' }} />
     {!user.token
       ? <Drawer.Screen name="LoginStack" component={LoginStack} options={{ drawerLabel: 'Login' }} />
       : (
