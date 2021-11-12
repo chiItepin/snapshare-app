@@ -14,6 +14,7 @@ import { IState } from '../reducer';
 import PostsList from '../screens/PostsList';
 import Login from '../screens/user/Login';
 import Account from '../screens/user/Account';
+import PostView from '../screens/posts/PostView';
 import IUser from '../screens/templates/user';
 
 const Stack = createStackNavigator();
@@ -73,6 +74,7 @@ const PostsStack: FunctionComponent<IPropsStack> = ({ navigation }: IPropsStack)
     screenOptions={stackOptions(navigation)}
   >
     <Stack.Screen name="PostsList" component={PostsList} options={{ title: 'Home' }} />
+    <Stack.Screen name="PostView" component={PostView} options={{ title: 'Viewing Post' }} />
   </Stack.Navigator>
 );
 

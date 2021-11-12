@@ -5,7 +5,7 @@ import IUser from './screens/templates/user';
 
 interface IRequestPosts {
   createPost: (content: string) => Promise<AxiosResponse<any>>;
-  getPosts: () => Promise<AxiosResponse<any>>;
+  getPosts: (page: number) => Promise<AxiosResponse<any>>;
 }
 
 export interface IApi {
@@ -18,7 +18,7 @@ const useApi = (): IApi => {
   const [loaded, setLoaded] = useState(false);
   const [token, setToken] = useState<undefined|string>('');
 
-  const baseUrl = 'https://5ef3-189-173-91-167.ngrok.io';
+  const baseUrl = 'http://b6b4-189-173-56-188.ngrok.io';
 
   const headers = {
     'Content-type': 'application/json; charset=UTF-8',
@@ -33,7 +33,7 @@ const useApi = (): IApi => {
   });
 
   const fetchPosts = {
-    getPosts: (): Promise<AxiosResponse<any>> => axios.get(`${baseUrl}/api/posts`, {
+    getPosts: (page: number): Promise<AxiosResponse<any>> => axios.get(`${baseUrl}/api/posts?page=${page}`, {
       headers,
     }),
     createPost: (content: string): Promise<AxiosResponse<any>> => axios.post(`${baseUrl}/api/posts`, {

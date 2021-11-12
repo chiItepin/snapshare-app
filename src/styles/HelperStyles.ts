@@ -8,8 +8,23 @@ const HelperStyles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
+  justifySpaceBetween: {
+    justifyContent: 'space-between',
+  },
+  justifySpaceAround: {
+    justifyContent: 'space-around',
+  },
+  justifyFlexEnd: {
+    justifyContent: 'flex-end',
+  },
+  'w-25': {
+    width: '25%',
+  },
   'w-50': {
     width: '50%',
+  },
+  'w-75': {
+    width: '75%',
   },
   'w-100': {
     width: '100%',
@@ -19,6 +34,9 @@ const HelperStyles = StyleSheet.create({
   },
   textField: {
     width: '100%',
+  },
+  paddingHorizontalBig: {
+    paddingHorizontal: 24,
   },
   paddingHorizontalMed: {
     paddingHorizontal: 12,
@@ -36,13 +54,16 @@ const HelperStyles = StyleSheet.create({
     marginTop: 25,
   },
   marginBottomBig: {
-    marginTop: 25,
+    marginBottom: 25,
   },
   marginVerticalBig: {
     marginVertical: 25,
   },
   marginVerticalMed: {
     marginVertical: 12,
+  },
+  marginBottomMed: {
+    marginBottom: 12,
   },
 });
 
