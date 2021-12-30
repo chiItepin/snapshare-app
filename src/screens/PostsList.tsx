@@ -1,29 +1,33 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import moment from 'moment';
+import { AxiosResponse, AxiosError } from 'axios';
 import {
   View,
-  FlatList,
 } from 'react-native';
 import {
   Toast,
-  Card,
   TextField,
   Button,
-  Text,
 } from 'react-native-ui-lib';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import useApi from '../useApi';
 import styles from '../styles/GlobalStyles';
 import HelperStyles from '../styles/HelperStyles';
+import IUser from '../screens/templates/user';
 import IPost from '../screens/templates/post';
 import NewPostTextField from '../components/posts/NewPostTextField';
+import FlatPostsList from '../components/posts/FlatPostsList';
 
-interface IPropsNavigation {
+interface IProps {
+  clearUser: () => void;
   navigation: any;
 }
 
-const PostsList: FunctionComponent<IPropsNavigation> = ({
+const PostsList: FunctionComponent<IProps> = ({
   navigation,
-}: IPropsNavigation) => {
+  clearUser,
+}: IProps) => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -41,7 +45,7 @@ const PostsList: FunctionComponent<IPropsNavigation> = ({
     if (loadMore === false) {
       setPosts([]);
     }
-    fetchPosts.getPosts(page).then((res) => {
+    fetchPosts.getPosts(page).then((res: AxiosResponse<any>) => {
       setLoading(false);
       setLoaded(true);
       if (loadMore === false) {
@@ -51,9 +55,14 @@ const PostsList: FunctionComponent<IPropsNavigation> = ({
       }
       setNextPage(res.data.data.nextPage);
       setNotificationMessage('');
-    }).catch((err) => {
-      console.log(err);
-      setNotificationMessage('Unknown error');
+    }).catch(async (err: AxiosError) => {
+      if (err.response?.status === 401) {
+        await AsyncStorage.removeItem('@user');
+        clearUser();
+      } else {
+        setNotificationMessage('Unknown error');
+      }
+      setLoading(false);
     });
   };
 
@@ -124,71 +133,27 @@ const PostsList: FunctionComponent<IPropsNavigation> = ({
         message={notificationMessage}
       />
 
-      <FlatList
-        data={posts}
-        onRefresh={() => handleGetPosts(false)}
-        refreshing={!loaded}
-        style={HelperStyles.paddingHorizontalMed}
-        renderItem={(item) => (
-          <View key={item.item._id} style={styles.card}>
-            <Card
-              style={{ marginBottom: 5 }}
-              onPress={() => navigation.navigate('PostView', {
-                post: item.item,
-              })}
-            >
-              <Card.Section
-                bg-white
-                content={[
-                  { text: item.item.content.length > 50 ? `${item.item.content.substring(0, 50)}...` : item.item.content, text70: true, grey10: true },
-                  { text: item.item?.authorId?.email, text90: true, grey40: true },
-                  { text: moment(item.item.createdAt).format('MMM Do YY'), text90: true, grey50: true },
-                ]}
-                style={{ padding: 20 }}
-              />
-              <View style={[HelperStyles.row,
-                HelperStyles.paddingHorizontalBig,
-                HelperStyles.marginBottomMed,
-                HelperStyles.justifySpaceBetween,
-              ]}
-              >
-                <View style={[HelperStyles.row,
-                  HelperStyles['w-50'],
-                ]}
-                >
-                  <View style={HelperStyles.paddingRightMed}>
-                    <Button
-                      text90
-                      link
-                      label={`Likes ${item.item.likes.length}`}
-                    />
-                  </View>
-
-                  <View>
-                    <Text
-                      text90
-                      grey40
-                      link
-                    >
-                      {`Comments ${item.item.comments.length}`}
-                    </Text>
-                  </View>
-                </View>
-
-                <View style={[HelperStyles['w-50'], HelperStyles.row, HelperStyles.justifyFlexEnd]}>
-                  {/* <Button text90 link label="Share" /> */}
-                </View>
-              </View>
-            </Card>
-          </View>
-        )}
-        ListHeaderComponent={renderCreatePost()}
-        ListFooterComponent={renderFooter()}
-        keyExtractor={(item) => item._id}
-        ListEmptyComponent={loaded ? <Text style={{ textAlign: 'center' }}>No records found</Text> : null}
+      <FlatPostsList
+        posts={posts}
+        navigation={navigation}
+        renderHeader={renderCreatePost}
+        renderFooter={renderFooter}
+        loaded={loaded}
+        handleGetPosts={handleGetPosts}
       />
     </View>
   );
 };
 
-export default PostsList;
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  clearUser: () => dispatch({
+    type: 'SET_USER',
+    payload: {
+      email: '',
+      token: '',
+      loggedInDate: '',
+    } as IUser,
+  }),
+});
+
+export default connect(null, mapDispatchToProps)(PostsList);

@@ -10,32 +10,25 @@ import {
 } from 'react-native-ui-lib';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import IUser from '../templates/user';
 import styles from '../../styles/GlobalStyles';
 import { IState } from '../../reducer';
 
-interface IPropsNavigation {
-  dispatch: any;
+interface IProps {
+  clearUser: () => void;
   user: IUser;
 }
 
-const Login:FunctionComponent<IPropsNavigation> = ({
-  dispatch,
+const Login:FunctionComponent<IProps> = ({
+  clearUser,
   user,
-}: IPropsNavigation) => {
+}: IProps) => {
   const [notificationMessage, setNotificationMessage] = useState('');
 
   const handleLogout = async (): Promise<void> => {
     await AsyncStorage.removeItem('@user');
-
-    dispatch({
-      type: 'SET_USER',
-      payload: {
-        email: '',
-        token: '',
-        loggedInDate: '',
-      } as IUser,
-    });
+    clearUser();
   };
 
   return (
@@ -80,4 +73,15 @@ const mapStateToProps = (state: IState) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps)(Login);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  clearUser: () => dispatch({
+    type: 'SET_USER',
+    payload: {
+      email: '',
+      token: '',
+      loggedInDate: '',
+    } as IUser,
+  }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

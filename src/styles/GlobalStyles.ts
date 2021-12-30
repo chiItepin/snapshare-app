@@ -25,6 +25,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     width: '100%',
   },
+  cardChild: {
+    marginBottom: 5,
+    overflow: 'hidden',
+  },
 });
 
 export default styles;

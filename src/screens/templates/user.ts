@@ -3,6 +3,7 @@ interface IUser {
   email: string;
   password?: string;
   token?: string;
+  image?: string;
   loggedInDate?: string;
   createdAt?: string;
   updatedAt?: string;

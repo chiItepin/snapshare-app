@@ -50,6 +50,9 @@ const HelperStyles = StyleSheet.create({
   paddingVerticalTopMed: {
     paddingTop: 12,
   },
+  paddingBottomMed: {
+    paddingBottom: 12,
+  },
   marginTopBig: {
     marginTop: 25,
   },
@@ -64,6 +67,9 @@ const HelperStyles = StyleSheet.create({
   },
   marginBottomMed: {
     marginBottom: 12,
+  },
+  bgWhite: {
+    backgroundColor: 'white',
   },
 });
 

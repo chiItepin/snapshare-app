@@ -12,20 +12,26 @@ import {
 } from 'react-native-ui-lib';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
+import Redux from 'redux';
 import IUser from '../templates/user';
 import useApi from '../../useApi';
 import styles from '../../styles/GlobalStyles';
 import typographyStyles from '../../styles/TypographyStyles';
 import helperStyles from '../../styles/HelperStyles';
 
+type TSetUser = (userModel: IUser) => void
+
+interface DispatchProps {
+  setUser: TSetUser
+}
 interface IPropsNavigation {
   navigation: any;
-  dispatch: any;
+  setUser: TSetUser
 }
 
 const Login:FunctionComponent<IPropsNavigation> = ({
   navigation,
-  dispatch,
+  setUser,
 }: IPropsNavigation) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -48,12 +54,7 @@ const Login:FunctionComponent<IPropsNavigation> = ({
         };
 
         await AsyncStorage.setItem('@user', JSON.stringify(userModel));
-        dispatch({
-          type: 'SET_USER',
-          payload: {
-            ...userModel,
-          } as IUser,
-        });
+        setUser(userModel);
 
         navigation.navigate('AccountStack');
       })
@@ -67,13 +68,7 @@ const Login:FunctionComponent<IPropsNavigation> = ({
     const getToken = async () => {
       AsyncStorage.getItem('@user').then((value: any) => {
         const userModel = JSON.parse(value) as IUser;
-
-        dispatch({
-          type: 'SET_USER',
-          payload: {
-            ...userModel,
-          } as IUser,
-        });
+        setUser(userModel);
       });
     };
     getToken();
@@ -128,4 +123,13 @@ const Login:FunctionComponent<IPropsNavigation> = ({
   );
 };
 
-export default connect(null, null)(Login);
+const mapDispatchToProps = (dispatch: Redux.Dispatch<any>) => ({
+  setUser: (userModel: IUser) => dispatch({
+    type: 'SET_USER',
+    payload: {
+      ...userModel,
+    },
+  }),
+});
+
+export default connect<DispatchProps>(null, mapDispatchToProps)(Login);
