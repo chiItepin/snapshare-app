@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL } from '@env';
 import IUser from './screens/templates/user';
 
 interface IRequestPosts {
@@ -18,7 +19,7 @@ const useApi = (): IApi => {
   const [loaded, setLoaded] = useState(false);
   const [token, setToken] = useState<undefined|string>('');
 
-  const baseUrl = 'http://9865-2806-103e-27-1dec-edd8-3f28-8d98-46a3.ngrok.io';
+  const baseUrl = API_URL;
 
   const headers = {
     'Content-type': 'application/json; charset=UTF-8',

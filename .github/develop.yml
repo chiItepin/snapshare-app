@@ -1,0 +1,23 @@
+name: CI
+on: [push]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version: [14]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Installs Node js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Install dependencies
+        run: |
+          cp .env.cicd .env
+          yarn install
+      - name: run Eslint
+        run: yarn lint

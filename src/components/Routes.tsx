@@ -179,7 +179,7 @@ const DrawerList: FunctionComponent<DrawerListProps> = (props: DrawerListProps) 
 
 export const DrawerListConnected = connect(mapStateToProps, mapDispatchToProps)(DrawerList);
 
-const Navigation: FunctionComponent<IPropsMainNavigation> = ({
+const NavigationDrawer: FunctionComponent<IPropsMainNavigation> = ({
   user,
 }: IPropsMainNavigation) => (
   <Drawer.Navigator
@@ -202,4 +202,4 @@ const Navigation: FunctionComponent<IPropsMainNavigation> = ({
   </Drawer.Navigator>
 );
 
-export default connect(mapStateToProps)(Navigation);
+export default connect(mapStateToProps)(NavigationDrawer);
