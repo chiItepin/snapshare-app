@@ -12,9 +12,11 @@ export interface IActions {
 
 const initialState: IState = {
   user: {
+    _id: '',
     email: '',
     token: '',
     loggedInDate: '',
+    image: '',
   },
   posts: [],
 };

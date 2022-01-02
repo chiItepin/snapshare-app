@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import {
   ScrollView,
   View,
@@ -7,29 +7,76 @@ import {
   Button,
   Toast,
   Card,
+  Avatar,
+  Colors,
 } from 'react-native-ui-lib';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
+import { AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
+import * as ImagePicker from 'expo-image-picker';
 import IUser from '../templates/user';
 import styles from '../../styles/GlobalStyles';
 import { IState } from '../../reducer';
+import useApi from '../../useApi';
 
+type userPropertiesType = 'image'|'loggedInDate'|'token';
 interface IProps {
   clearUser: () => void;
+  changeUser: (user: IUser, property: userPropertiesType, value: any) => void;
   user: IUser;
 }
 
 const Login:FunctionComponent<IProps> = ({
   clearUser,
   user,
+  changeUser,
 }: IProps) => {
   const [notificationMessage, setNotificationMessage] = useState('');
+  const { User, apiLoaded } = useApi();
 
   const handleLogout = async (): Promise<void> => {
     await AsyncStorage.removeItem('@user');
     clearUser();
   };
+
+  const handlePickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+      base64: true,
+    });
+
+    if (!result.cancelled && user._id && result.base64) {
+      setNotificationMessage('Uploading...');
+      User.updateImage(user._id, result.base64)
+        .then(() => {
+          setNotificationMessage('Image updated successfully');
+          changeUser(user, 'image', result.base64);
+        })
+        .catch(() => {
+          setNotificationMessage('Image uploading failed!');
+        });
+    }
+  };
+
+  useEffect(() => {
+    if (apiLoaded && user._id) {
+      const retrieveUser = (): void => {
+        User.getUser(user._id || '')
+          .then((res: AxiosResponse) => {
+            changeUser(user, 'image', res.data.data.image);
+          })
+          .catch(() => {
+            setNotificationMessage('Failed retrieving user');
+          });
+      };
+      retrieveUser();
+    }
+  }, [apiLoaded, user?._id]);
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -46,6 +93,16 @@ const Login:FunctionComponent<IProps> = ({
 
         <View style={styles.card}>
           <Card style={{ marginBottom: 10 }}>
+            <View style={styles.accountAvatarContainer}>
+              <Avatar
+                source={user?.image ? { uri: `data:image/jpeg;base64,${user.image}` } : undefined}
+                size={60}
+                label={user.email.substring(0, 1).toUpperCase()}
+                backgroundColor={Colors.yellow80}
+                onPress={handlePickImage}
+              />
+            </View>
+
             <Card.Section
               bg-white
               content={[
@@ -80,8 +137,18 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       email: '',
       token: '',
       loggedInDate: '',
+      image: '',
     } as IUser,
   }),
+  changeUser: (user: IUser, property: string, value: any) => {
+    dispatch({
+      type: 'SET_USER',
+      payload: {
+        ...user,
+        [property]: value,
+      } as IUser,
+    });
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

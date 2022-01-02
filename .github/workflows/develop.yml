@@ -17,3 +17,20 @@ jobs:
           yarn install
       - name: run Eslint
         run: yarn lint
+
+  test:
+    name: Test
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Installs Node js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Install dependencies
+        run: |
+          cp .env.cicd .env
+          yarn install
+      - name: run Jest
+        run: yarn test

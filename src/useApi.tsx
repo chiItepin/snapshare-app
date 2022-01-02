@@ -9,9 +9,15 @@ interface IRequestPosts {
   getPosts: (page: number) => Promise<AxiosResponse<any>>;
 }
 
+interface IRequestUser {
+  updateImage: (id: string, image: string) => Promise<AxiosResponse<any>>;
+  getUser: (id: string) => Promise<AxiosResponse<any>>;
+}
+
 export interface IApi {
   apiLoaded: boolean;
   fetchPosts: IRequestPosts;
+  User: IRequestUser;
   loginUser: (email: string, password: string) => Promise<AxiosResponse<any>>;
 }
 
@@ -32,6 +38,17 @@ const useApi = (): IApi => {
   }, {
     headers,
   });
+
+  const User = {
+    getUser: (id: string): Promise<AxiosResponse<any>> => axios.get(`${baseUrl}/api/users/${id}`, {
+      headers,
+    }),
+    updateImage: (id: string, image: string): Promise<AxiosResponse<any>> => axios.patch(`${baseUrl}/api/users/${id}`, {
+      image,
+    }, {
+      headers,
+    }),
+  };
 
   const fetchPosts = {
     getPosts: (page: number): Promise<AxiosResponse<any>> => axios.get(`${baseUrl}/api/posts?page=${page}`, {
@@ -59,6 +76,7 @@ const useApi = (): IApi => {
     apiLoaded: loaded,
     loginUser,
     fetchPosts,
+    User,
   };
 };
 

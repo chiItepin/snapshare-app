@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     overflow: 'hidden',
   },
+  accountAvatarContainer: {
+    marginTop: 5,
+    alignItems: 'center',
+  },
 });
 
 export default styles;

@@ -10,6 +10,7 @@ import {
   TextField,
   Toast,
 } from 'react-native-ui-lib';
+import { AxiosResponse } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import Redux from 'redux';
@@ -43,15 +44,16 @@ const Login:FunctionComponent<IPropsNavigation> = ({
     setLoading(true);
     setNotificationMessage('Loading...');
     loginUser(email, password)
-      .then(async (res: any) => {
+      .then(async (res: AxiosResponse) => {
         setLoading(false);
         setNotificationMessage('Logged in successfully!');
 
         const userModel = {
           email,
+          _id: res.data.userId,
           token: res.data.data,
           loggedInDate: moment().format('LL'),
-        };
+        } as IUser;
 
         await AsyncStorage.setItem('@user', JSON.stringify(userModel));
         setUser(userModel);
