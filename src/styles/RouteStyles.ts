@@ -8,6 +8,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   drawerAccountChip: { alignItems: 'center', paddingVertical: 5 },
+  drawerAccountChipImage: {
+    width: 20,
+    height: 20,
+  },
 });
 
 export default styles;

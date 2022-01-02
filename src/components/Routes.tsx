@@ -3,12 +3,12 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
 import {
   Chip,
   Colors,
   View,
 } from 'react-native-ui-lib';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -16,7 +16,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import { HeaderBackButton } from '@react-navigation/elements';
+import { HeaderBackButton, HeaderBackButtonProps } from '@react-navigation/elements';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -31,16 +31,12 @@ import IUser from '../screens/templates/user';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-interface IPropsNavigation {
-  navigation: any;
+export interface IDrawerNavigationProps {
+  toggleDrawer: () => void;
 }
 
 interface IPropsStack {
-  navigation: IPropsNavigation;
-}
-
-interface IPropsDrawerStructure {
-  toggleDrawer: () => {};
+  navigation: IDrawerNavigationProps;
 }
 
 /**
@@ -48,12 +44,12 @@ interface IPropsDrawerStructure {
  * @param {Object} navigation
  * @returns {Object}
  */
-const stackOptions = (navigation: any): object => ({
+const stackOptions = (navigation: IDrawerNavigationProps): object => ({
   headerTitleAlign: 'center',
   headerTintColor: '#fff',
   headerStyle: { backgroundColor: '#5446f6' },
   cardStyle: { backgroundColor: '#fff' },
-  headerLeft: (props: any) => (!props?.canGoBack
+  headerLeft: (props: HeaderBackButtonProps) => (!props.canGoBack
     ? (
       <NavigationDrawerStructure toggleDrawer={() => navigation.toggleDrawer()} />
     ) : (
@@ -63,9 +59,9 @@ const stackOptions = (navigation: any): object => ({
     )),
 });
 
-const NavigationDrawerStructure: FunctionComponent<IPropsDrawerStructure> = ({
+const NavigationDrawerStructure: FunctionComponent<IDrawerNavigationProps> = ({
   toggleDrawer,
-}: IPropsDrawerStructure) => (
+}: IDrawerNavigationProps) => (
   <View style={{ flexDirection: 'row' }}>
     <TouchableOpacity onPress={toggleDrawer}>
       <Image
@@ -147,7 +143,13 @@ const DrawerList: FunctionComponent<DrawerListProps> = (props: DrawerListProps) 
         {user?.email ? (
           <View style={drawerStyles.drawerAccountChip}>
             <Chip
-              // iconSource={Assets.icons.settings}
+              avatarProps={{
+                source: user?.image ? { uri: `data:image/jpeg;base64,${user.image}` } : undefined,
+                size: 20,
+                label: user.email.substring(0, 1).toUpperCase(),
+                backgroundColor: Colors.yellow80,
+              }}
+              iconStyle={drawerStyles.drawerAccountChipImage}
               label={user?.email}
               labelStyle={{ color: Colors.blue40 }}
               containerStyle={

@@ -1,8 +1,7 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import moment from 'moment';
 import {
   View,
-  FlatList,
 } from 'react-native';
 import {
   Toast,
@@ -10,7 +9,6 @@ import {
   Text,
   Button,
 } from 'react-native-ui-lib';
-import useApi from '../../useApi';
 import styles from '../../styles/GlobalStyles';
 import HelperStyles from '../../styles/HelperStyles';
 import IPost from '../../screens/templates/post';
@@ -29,7 +27,6 @@ const PostView: FunctionComponent<IProps> = ({
   route,
 }: IProps) => {
   const [notificationMessage, setNotificationMessage] = useState('');
-  const { apiLoaded } = useApi();
   const { post } = route.params;
   return (
     <View style={styles.container}>
