@@ -27,4 +27,7 @@ test('NewPostTextField renders and handles events', () => {
 
   // 3 events triggered | 2 buttons and 1 field change triggered
   expect(mockFn).toHaveBeenCalledTimes(3);
+
+  const tree = component.toJSON();
+  expect(tree).toMatchSnapshot();
 });

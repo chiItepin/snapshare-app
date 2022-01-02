@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import moment from 'moment';
 import {
   Text,
@@ -6,10 +6,9 @@ import {
 } from 'react-native';
 import {
   Button,
-  TextField,
+  Incubator,
   Toast,
   View,
-  LoaderScreen,
 } from 'react-native-ui-lib';
 import { NavigationProp } from '@react-navigation/native';
 import { AxiosResponse } from 'axios';
@@ -22,6 +21,8 @@ import styles from '../../styles/GlobalStyles';
 import typographyStyles from '../../styles/TypographyStyles';
 import helperStyles from '../../styles/HelperStyles';
 import RootScreenParams from '../RootScreenParams';
+
+const { TextField } = Incubator;
 
 type TSetUser = (userModel: IUser) => void
 
@@ -39,73 +40,36 @@ const Login:FunctionComponent<IPropsNavigation> = ({
 }: IPropsNavigation) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [loadingUserToken, setLoadingUserToken] = useState(true);
   const [notificationMessage, setNotificationMessage] = useState('');
-  const { loginUser, apiLoaded, User } = useApi();
+  const { User } = useApi();
 
-  const handleLogin = (): void => {
+  const handleSignup = (): void => {
     setLoading(true);
     setNotificationMessage('Loading...');
-    loginUser(email, password)
+    User.createUser(email, password, confirmPassword)
       .then(async (res: AxiosResponse) => {
         setLoading(false);
-        setNotificationMessage('Logged in successfully!');
+        setNotificationMessage('Signed Up successfully!');
+
+        const newUser: IUser = res.data.data;
 
         const userModel = {
-          email,
-          _id: res.data.userId,
-          token: res.data.data,
+          email: newUser.email,
+          _id: newUser._id,
+          token: res.data.token,
           loggedInDate: moment().format('LL'),
         } as IUser;
 
         await AsyncStorage.setItem('@user', JSON.stringify(userModel));
         setUser(userModel);
-
-        navigation.navigate('AccountStack');
       })
       .catch(() => {
-        setNotificationMessage('Account not found!');
+        setNotificationMessage('Email already found!');
         setLoading(false);
       });
   };
-
-  useEffect(() => {
-    const getUserToken = async () => {
-      setLoadingUserToken(true);
-      AsyncStorage.getItem('@user')
-        .then((value: any) => {
-          const userModel = JSON.parse(value) as IUser;
-
-          // retrieve user
-          User.getUser(userModel._id || '')
-            .then((res: AxiosResponse) => {
-              setUser({
-                ...userModel,
-                image: res.data.data.image,
-              });
-              setLoadingUserToken(false);
-            })
-            .catch(() => {
-              setNotificationMessage('Failed retrieving user');
-            });
-        })
-        .catch(() => {
-          setLoadingUserToken(false);
-        });
-    };
-    if (apiLoaded) {
-      getUserToken();
-    }
-  }, [apiLoaded]);
-
-  if (loadingUserToken) {
-    return (
-      <View flex right paddingR-20>
-        <LoaderScreen message="Loading..." overlay />
-      </View>
-    );
-  }
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -124,39 +88,59 @@ const Login:FunctionComponent<IPropsNavigation> = ({
           <Text
             style={[typographyStyles.h1, helperStyles.marginVerticalMed]}
           >
-            Enter your credentials
+            Signing Up
           </Text>
 
           <TextField
             placeholder="Enter your email"
-            title="Email"
+            label="Email"
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
+            enableErrors
+            validationMessage={['Email is required', 'Email is invalid']}
+            validate={['required', 'email']}
+            validateOnChange
+            fieldStyle={styles.genericField}
+            validationMessageStyle={{ marginBottom: 10 }}
           />
 
           <TextField
             placeholder="Enter your password"
-            title="Password"
+            label="Password"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
+            maxLength={20}
+            showCharCounter
+            fieldStyle={styles.genericField}
+          />
+
+          <TextField
+            placeholder="Confirm your password"
+            label="Confirm Password"
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            secureTextEntry
+            maxLength={20}
+            showCharCounter
+            fieldStyle={styles.genericField}
           />
 
           <Button
-            onPress={handleLogin}
-            label="Submit"
-            disabled={!password || !email || loading}
+            onPress={handleSignup}
+            label="Sign Up"
+            disabled={!password || !email || loading || (password !== confirmPassword)}
             enableShadow
             borderRadius={6}
           />
 
           <Button
-            onPress={() => navigation.navigate('SignUpView')}
+            onPress={() => navigation.navigate('Login')}
             hyperlink
             text90
             link
-            label="Sign Up"
+            label="Already have an account"
             style={helperStyles.marginTopMed}
             labelStyle={{ textDecorationLine: 'none' }}
           />

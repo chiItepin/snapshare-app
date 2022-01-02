@@ -62,6 +62,7 @@ const PostsList: FunctionComponent<IProps> = ({
       } else {
         setNotificationMessage('Unknown error');
       }
+      setLoaded(true);
       setLoading(false);
     });
   };
@@ -75,8 +76,7 @@ const PostsList: FunctionComponent<IProps> = ({
       setPosts(updatedPosts);
       setNewContent('');
       setNotificationMessage('');
-    }).catch((err) => {
-      console.log(err);
+    }).catch(() => {
       setNotificationMessage('Unknown error');
     });
   };
