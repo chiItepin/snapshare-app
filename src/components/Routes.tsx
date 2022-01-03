@@ -25,6 +25,7 @@ import { IState } from '../reducer';
 import PostsList from '../screens/PostsList';
 import Login from '../screens/user/Login';
 import Account from '../screens/user/Account';
+import SignUpView from '../screens/user/SignUpView';
 import PostView from '../screens/posts/PostView';
 import IUser from '../screens/templates/user';
 
@@ -91,6 +92,7 @@ const LoginStack: FunctionComponent<IPropsStack> = ({ navigation }: IPropsStack)
     screenOptions={stackOptions(navigation)}
   >
     <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
+    <Stack.Screen name="SignUpView" component={SignUpView} options={{ title: 'Sign Up' }} />
   </Stack.Navigator>
 );
 

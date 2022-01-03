@@ -1,0 +1,783 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignUpView renders and handles events 1`] = `
+<RCTScrollView
+  contentContainerStyle={
+    Object {
+      "flexGrow": 1,
+    }
+  }
+>
+  <View>
+    <View
+      style={
+        Array [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          Object {},
+          Object {},
+          Object {},
+          Object {
+            "alignItems": "flex-start",
+            "flex": 1,
+            "justifyContent": "flex-start",
+            "padding": 12,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            Object {},
+            Object {},
+            Object {},
+            Object {
+              "flex": 1,
+              "paddingHorizontal": 5,
+              "paddingVertical": 12,
+              "width": "100%",
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "fontSize": 24,
+                "fontWeight": "bold",
+              },
+              Object {
+                "marginVertical": 12,
+              },
+            ]
+          }
+        >
+          Signing Up
+        </Text>
+        <View
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              Object {},
+              Object {},
+              Object {},
+              Array [
+                Object {},
+                undefined,
+              ],
+            ]
+          }
+        >
+          <Text
+            color="#20303C"
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "textAlign": "left",
+                },
+                undefined,
+                Object {
+                  "color": "#20303C",
+                },
+                undefined,
+                undefined,
+                Object {},
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  Object {
+                    "minHeight": 20,
+                  },
+                  undefined,
+                  undefined,
+                ],
+              ]
+            }
+          >
+            Email
+          </Text>
+          <View
+            centerV={true}
+            row={true}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                Object {},
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                Array [
+                  Object {},
+                  Array [
+                    Object {
+                      "borderBottomWidth": 1,
+                      "borderColor": "lightgrey",
+                      "paddingBottom": 10,
+                    },
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            <View
+              row={true}
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  Object {
+                    "flex": 1,
+                  },
+                  undefined,
+                  Object {},
+                  Object {},
+                  Object {
+                    "flexDirection": "row",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <TextInput
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                allowFontScaling={true}
+                autoCapitalize="none"
+                onBlur={[Function]}
+                onChangeText={[Function]}
+                onFocus={[Function]}
+                placeholder="Enter your email"
+                placeholderTextColor="#6E7881"
+                rejectResponderTermination={true}
+                style={
+                  Array [
+                    Object {
+                      "flexGrow": 1,
+                      "paddingBottom": 0,
+                      "paddingTop": 0,
+                      "textAlign": "left",
+                    },
+                    Object {
+                      "color": "#20303C",
+                    },
+                    Array [
+                      Object {},
+                      undefined,
+                      undefined,
+                    ],
+                  ]
+                }
+                underlineColorAndroid="transparent"
+                validate={
+                  Array [
+                    "required",
+                    "email",
+                  ]
+                }
+                validateOnChange={true}
+                validationMessage={
+                  Array [
+                    "Email is required",
+                    "Email is invalid",
+                  ]
+                }
+                value="lorem@ipsum.com"
+              />
+            </View>
+          </View>
+          <View
+            row={true}
+            spread={true}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                Object {},
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
+            }
+          >
+            <Text
+              red30={true}
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "transparent",
+                    "textAlign": "left",
+                  },
+                  undefined,
+                  Object {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "minHeight": 20,
+                    },
+                    Object {
+                      "marginBottom": 10,
+                    },
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            >
+              
+            </Text>
+          </View>
+        </View>
+        <View
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              Object {},
+              Object {},
+              Object {},
+              Array [
+                Object {},
+                undefined,
+              ],
+            ]
+          }
+        >
+          <Text
+            color="#20303C"
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "textAlign": "left",
+                },
+                undefined,
+                Object {
+                  "color": "#20303C",
+                },
+                undefined,
+                undefined,
+                Object {},
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  Object {
+                    "minHeight": 20,
+                  },
+                  undefined,
+                  undefined,
+                ],
+              ]
+            }
+          >
+            Password
+          </Text>
+          <View
+            centerV={true}
+            row={true}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                Object {},
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                Array [
+                  Object {},
+                  Array [
+                    Object {
+                      "borderBottomWidth": 1,
+                      "borderColor": "lightgrey",
+                      "paddingBottom": 10,
+                    },
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            <View
+              row={true}
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  Object {
+                    "flex": 1,
+                  },
+                  undefined,
+                  Object {},
+                  Object {},
+                  Object {
+                    "flexDirection": "row",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <TextInput
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                allowFontScaling={true}
+                maxLength={20}
+                onBlur={[Function]}
+                onChangeText={[Function]}
+                onFocus={[Function]}
+                placeholder="Enter your password"
+                placeholderTextColor="#6E7881"
+                rejectResponderTermination={true}
+                secureTextEntry={true}
+                style={
+                  Array [
+                    Object {
+                      "flexGrow": 1,
+                      "paddingBottom": 0,
+                      "paddingTop": 0,
+                      "textAlign": "left",
+                    },
+                    Object {
+                      "color": "#20303C",
+                    },
+                    Array [
+                      Object {},
+                      undefined,
+                      undefined,
+                    ],
+                  ]
+                }
+                underlineColorAndroid="transparent"
+                value="123123"
+              />
+            </View>
+          </View>
+          <View
+            row={true}
+            spread={true}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                Object {},
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
+            }
+          >
+            <Text
+              grey30={true}
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "transparent",
+                    "textAlign": "left",
+                  },
+                  undefined,
+                  Object {
+                    "color": "#6E7881",
+                  },
+                  undefined,
+                  undefined,
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "flex": 1,
+                      "textAlign": "right",
+                    },
+                    undefined,
+                  ],
+                ]
+              }
+            >
+              6/20
+            </Text>
+          </View>
+        </View>
+        <View
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              Object {},
+              Object {},
+              Object {},
+              Array [
+                Object {},
+                undefined,
+              ],
+            ]
+          }
+        >
+          <Text
+            color="#20303C"
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "textAlign": "left",
+                },
+                undefined,
+                Object {
+                  "color": "#20303C",
+                },
+                undefined,
+                undefined,
+                Object {},
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  Object {
+                    "minHeight": 20,
+                  },
+                  undefined,
+                  undefined,
+                ],
+              ]
+            }
+          >
+            Confirm Password
+          </Text>
+          <View
+            centerV={true}
+            row={true}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                Object {},
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                Array [
+                  Object {},
+                  Array [
+                    Object {
+                      "borderBottomWidth": 1,
+                      "borderColor": "lightgrey",
+                      "paddingBottom": 10,
+                    },
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            <View
+              row={true}
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  Object {
+                    "flex": 1,
+                  },
+                  undefined,
+                  Object {},
+                  Object {},
+                  Object {
+                    "flexDirection": "row",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <TextInput
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                allowFontScaling={true}
+                maxLength={20}
+                onBlur={[Function]}
+                onChangeText={[Function]}
+                onFocus={[Function]}
+                placeholder="Confirm your password"
+                placeholderTextColor="#6E7881"
+                rejectResponderTermination={true}
+                secureTextEntry={true}
+                style={
+                  Array [
+                    Object {
+                      "flexGrow": 1,
+                      "paddingBottom": 0,
+                      "paddingTop": 0,
+                      "textAlign": "left",
+                    },
+                    Object {
+                      "color": "#20303C",
+                    },
+                    Array [
+                      Object {},
+                      undefined,
+                      undefined,
+                    ],
+                  ]
+                }
+                underlineColorAndroid="transparent"
+                value="123123"
+              />
+            </View>
+          </View>
+          <View
+            row={true}
+            spread={true}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                Object {},
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
+            }
+          >
+            <Text
+              grey30={true}
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "transparent",
+                    "textAlign": "left",
+                  },
+                  undefined,
+                  Object {
+                    "color": "#6E7881",
+                  },
+                  undefined,
+                  undefined,
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "flex": 1,
+                      "textAlign": "right",
+                    },
+                    undefined,
+                  ],
+                ]
+              }
+            >
+              6/20
+            </Text>
+          </View>
+        </View>
+        <View
+          accessibilityRole="button"
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onLayout={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#5A48F5",
+              "borderRadius": 6,
+              "elevation": 2,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "minWidth": 90,
+              "opacity": 1,
+              "paddingHorizontal": 20,
+              "paddingVertical": 9.5,
+              "shadowColor": "#5A48F5",
+              "shadowOffset": Object {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.35,
+              "shadowRadius": 9.5,
+            }
+          }
+        >
+          <Text
+            numberOfLines={1}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "textAlign": "left",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  Object {
+                    "backgroundColor": "transparent",
+                    "flex": 0,
+                    "flexDirection": "row",
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                  },
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {},
+                  Object {},
+                  undefined,
+                ],
+              ]
+            }
+          >
+            Sign Up
+          </Text>
+        </View>
+        <View
+          accessibilityRole="button"
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onLayout={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "transparent",
+              "borderRadius": 0,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginTop": 12,
+              "minWidth": undefined,
+              "opacity": 1,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+            }
+          }
+        >
+          <Text
+            numberOfLines={1}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "textAlign": "left",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                undefined,
+                undefined,
+                Object {
+                  "textDecorationLine": "underline",
+                },
+                Array [
+                  Object {
+                    "backgroundColor": "transparent",
+                    "flex": 0,
+                    "flexDirection": "row",
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                  },
+                  Object {
+                    "color": "#5A48F5",
+                  },
+                  Object {},
+                  Object {
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "700",
+                    "lineHeight": 16,
+                  },
+                  Object {
+                    "textDecorationLine": "none",
+                  },
+                ],
+              ]
+            }
+          >
+            Already have an account
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;

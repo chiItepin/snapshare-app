@@ -8,7 +8,8 @@ interface RootScreenParams {
   PostsList: undefined;
   PostView: IPostViewParams|undefined;
   Login: undefined;
-  Account: undefined;
+  AccountStack: undefined;
+  SignUpView: undefined;
 }
 
 export default RootScreenParams;

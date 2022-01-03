@@ -56,6 +56,9 @@ const HelperStyles = StyleSheet.create({
   marginTopBig: {
     marginTop: 25,
   },
+  marginTopMed: {
+    marginTop: 12,
+  },
   marginBottomBig: {
     marginBottom: 25,
   },

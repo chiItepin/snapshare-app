@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import {
   ScrollView,
   View,
@@ -12,7 +12,6 @@ import {
 } from 'react-native-ui-lib';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
-import { AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
 import * as ImagePicker from 'expo-image-picker';
 import IUser from '../templates/user';
@@ -33,7 +32,7 @@ const Login:FunctionComponent<IProps> = ({
   changeUser,
 }: IProps) => {
   const [notificationMessage, setNotificationMessage] = useState('');
-  const { User, apiLoaded } = useApi();
+  const { User } = useApi();
 
   const handleLogout = async (): Promise<void> => {
     await AsyncStorage.removeItem('@user');
@@ -62,21 +61,6 @@ const Login:FunctionComponent<IProps> = ({
         });
     }
   };
-
-  useEffect(() => {
-    if (apiLoaded && user._id) {
-      const retrieveUser = (): void => {
-        User.getUser(user._id || '')
-          .then((res: AxiosResponse) => {
-            changeUser(user, 'image', res.data.data.image);
-          })
-          .catch(() => {
-            setNotificationMessage('Failed retrieving user');
-          });
-      };
-      retrieveUser();
-    }
-  }, [apiLoaded, user?._id]);
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

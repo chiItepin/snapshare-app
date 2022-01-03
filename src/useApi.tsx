@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from '@env';
+import { useSelector } from 'react-redux';
 import IUser from './screens/templates/user';
+import { IState } from './reducer';
 
 interface IRequestPosts {
   createPost: (content: string) => Promise<AxiosResponse<any>>;
@@ -12,6 +14,8 @@ interface IRequestPosts {
 interface IRequestUser {
   updateImage: (id: string, image: string) => Promise<AxiosResponse<any>>;
   getUser: (id: string) => Promise<AxiosResponse<any>>;
+  createUser: (email: string, password: string, confirmPassword: string)
+  => Promise<AxiosResponse<any>>;
 }
 
 export interface IApi {
@@ -23,7 +27,8 @@ export interface IApi {
 
 const useApi = (): IApi => {
   const [loaded, setLoaded] = useState(false);
-  const [token, setToken] = useState<undefined|string>('');
+  const [token, setToken] = useState('');
+  const user = useSelector((state: IState) => state.user);
 
   const baseUrl = API_URL;
 
@@ -41,6 +46,13 @@ const useApi = (): IApi => {
 
   const User = {
     getUser: (id: string): Promise<AxiosResponse<any>> => axios.get(`${baseUrl}/api/users/${id}`, {
+      headers,
+    }),
+    createUser: (email: string, password: string, confirmPassword: string): Promise<AxiosResponse<any>> => axios.post(`${baseUrl}/api/users/create`, {
+      email,
+      password,
+      confirmPassword,
+    }, {
       headers,
     }),
     updateImage: (id: string, image: string): Promise<AxiosResponse<any>> => axios.patch(`${baseUrl}/api/users/${id}`, {
@@ -69,8 +81,13 @@ const useApi = (): IApi => {
         setLoaded(true);
       });
     };
-    getToken();
-  }, []);
+    if (!user?.token) {
+      getToken();
+    } else {
+      setToken(user.token);
+      setLoaded(true);
+    }
+  }, [user?.token]);
 
   return {
     apiLoaded: loaded,

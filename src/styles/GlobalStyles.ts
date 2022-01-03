@@ -33,6 +33,11 @@ const styles = StyleSheet.create({
     marginTop: 5,
     alignItems: 'center',
   },
+  genericField: {
+    borderBottomWidth: 1,
+    borderColor: 'lightgrey',
+    paddingBottom: 10,
+  },
 });
 
 export default styles;
