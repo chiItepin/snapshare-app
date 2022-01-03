@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import {
   Image,
   TouchableOpacity,
@@ -8,7 +8,9 @@ import {
   Colors,
   View,
 } from 'react-native-ui-lib';
+import * as Linking from 'expo-linking';
 import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -20,6 +22,7 @@ import { HeaderBackButton, HeaderBackButtonProps } from '@react-navigation/eleme
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RootScreenParams from '../screens/RootScreenParams';
 import drawerStyles from '../styles/RouteStyles';
 import { IState } from '../reducer';
 import PostsList from '../screens/PostsList';
@@ -185,25 +188,49 @@ export const DrawerListConnected = connect(mapStateToProps, mapDispatchToProps)(
 
 const NavigationDrawer: FunctionComponent<IPropsMainNavigation> = ({
   user,
-}: IPropsMainNavigation) => (
-  <Drawer.Navigator
-    initialRouteName={!user.token ? 'LoginStack' : 'PostsStack'}
-    screenOptions={{
-      headerShown: false,
-    }}
-    drawerContent={(props: DrawerContentComponentProps) => (
-      <DrawerListConnected {...props} />
-    )}
-  >
-    {!user.token
-      ? <Drawer.Screen name="LoginStack" component={LoginStack} options={{ drawerLabel: 'Login' }} />
-      : (
-        <>
-          <Drawer.Screen name="PostsStack" component={PostsStack} options={{ drawerLabel: 'Posts' }} />
-          <Drawer.Screen name="AccountStack" component={AccountStack} options={{ drawerLabel: 'Account' }} />
-        </>
+}: IPropsMainNavigation) => {
+  const navigation = useNavigation<NavigationProp<RootScreenParams>>();
+
+  useEffect(() => {
+    const urlRedirect = (url: string): void => {
+      // parse and redirect to new url
+      const { path, queryParams } = Linking.parse(url);
+      if (path === 'PostView' && queryParams?.postId) {
+        navigation.navigate('PostView', {
+          postId: queryParams.postId,
+        });
+      }
+    };
+
+    const linkingHandler = (event: Linking.EventType) => {
+      urlRedirect(event.url);
+    };
+
+    // listen for new url events coming from Expo
+    Linking.addEventListener('url', linkingHandler);
+    return () => Linking.removeEventListener('url', linkingHandler);
+  }, []);
+
+  return (
+    <Drawer.Navigator
+      initialRouteName={!user.token ? 'LoginStack' : 'PostsStack'}
+      screenOptions={{
+        headerShown: false,
+      }}
+      drawerContent={(props: DrawerContentComponentProps) => (
+        <DrawerListConnected {...props} />
       )}
-  </Drawer.Navigator>
-);
+    >
+      {!user.token
+        ? <Drawer.Screen name="LoginStack" component={LoginStack} options={{ drawerLabel: 'Login' }} />
+        : (
+          <>
+            <Drawer.Screen name="PostsStack" component={PostsStack} options={{ drawerLabel: 'Posts' }} />
+            <Drawer.Screen name="AccountStack" component={AccountStack} options={{ drawerLabel: 'Account' }} />
+          </>
+        )}
+    </Drawer.Navigator>
+  );
+};
 
 export default connect(mapStateToProps)(NavigationDrawer);

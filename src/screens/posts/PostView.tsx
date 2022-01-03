@@ -1,20 +1,21 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import moment from 'moment';
-import {
-  View,
-} from 'react-native';
+import { AxiosResponse } from 'axios';
 import {
   Toast,
   Card,
   Text,
   Button,
+  LoaderScreen,
+  View,
 } from 'react-native-ui-lib';
 import styles from '../../styles/GlobalStyles';
 import HelperStyles from '../../styles/HelperStyles';
 import IPost from '../../screens/templates/post';
+import useApi from '../../useApi';
 
 interface IParams {
-  post: IPost;
+  postId: string;
 }
 
 interface IProps {
@@ -26,8 +27,42 @@ interface IProps {
 const PostView: FunctionComponent<IProps> = ({
   route,
 }: IProps) => {
+  const [post, setPost] = useState<IPost>();
+  const [loaded, setLoaded] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
-  const { post } = route.params;
+  const { fetchPosts, apiLoaded } = useApi();
+  const { postId } = route.params;
+
+  useEffect(() => {
+    if (postId && apiLoaded) {
+      fetchPosts.getPost(postId)
+        .then((res: AxiosResponse) => {
+          setPost(res.data.data);
+          setLoaded(true);
+        })
+        .catch(() => {
+          setNotificationMessage('Post not found');
+        });
+    }
+  }, [postId, apiLoaded]);
+
+  if (!loaded || !post?._id) {
+    return (
+      <View flex right paddingR-20>
+        <Toast
+          visible={!!notificationMessage}
+          position="bottom"
+          showDismiss
+          onDismiss={() => setNotificationMessage('')}
+          backgroundColor="black"
+          autoDismiss={3000}
+          message={notificationMessage}
+        />
+        <LoaderScreen message="Loading..." overlay />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Toast

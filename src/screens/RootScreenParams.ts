@@ -1,7 +1,5 @@
-import IPost from '../screens/templates/post';
-
 interface IPostViewParams {
-  post: IPost,
+  postId: string,
 }
 
 interface RootScreenParams {

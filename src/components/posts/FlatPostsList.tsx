@@ -27,12 +27,14 @@ interface IProps {
   loaded: boolean;
   handleGetPosts: (loadMore: boolean, page?: number) => void;
   handlePostLike: (postId: string) => void;
+  handlePostShare: (postId: string) => void;
 }
 
 interface IRenderPostProps {
   item: IPost;
   navigation: NavigationProp<RootScreenParams>;
   handlePostLike: (postId: string) => void;
+  handlePostShare: (postId: string) => void;
 }
 
 type likeType = {
@@ -43,6 +45,7 @@ const RenderPost: FunctionComponent<IRenderPostProps> = ({
   item,
   navigation,
   handlePostLike,
+  handlePostShare,
 }: IRenderPostProps) => {
   const user = useSelector((state: IState) => state.user);
 
@@ -58,7 +61,7 @@ const RenderPost: FunctionComponent<IRenderPostProps> = ({
       <Card
         style={styles.cardChild}
         onPress={() => navigation.navigate('PostView', {
-          post: item,
+          postId: item._id,
         })}
       >
 
@@ -94,16 +97,17 @@ const RenderPost: FunctionComponent<IRenderPostProps> = ({
         ]}
         >
           <View style={[HelperStyles.row,
-            HelperStyles['w-50'],
+            HelperStyles['w-100'],
           ]}
           >
-            <View style={HelperStyles.paddingRightMed}>
+            <View>
               <Button
                 text90
                 color={hasUserLiked() ? Colors.violet30 : Colors.grey30}
                 link
                 onPress={() => handlePostLike(item._id)}
                 label={`Likes ${item.likes.length}`}
+                style={HelperStyles.paddingRightMed}
               />
             </View>
 
@@ -112,14 +116,22 @@ const RenderPost: FunctionComponent<IRenderPostProps> = ({
                 text90
                 grey40
                 link
+                style={HelperStyles.paddingRightMed}
               >
                 {`Comments ${item.comments.length}`}
               </Text>
             </View>
-          </View>
 
-          <View style={[HelperStyles['w-50'], HelperStyles.row, HelperStyles.justifyFlexEnd]}>
-            {/* <Button text90 link label="Share" /> */}
+            <View>
+              <Button
+                text90
+                color={Colors.grey40}
+                link
+                onPress={() => handlePostShare(item._id)}
+                label="Share"
+                style={HelperStyles.paddingRightMed}
+              />
+            </View>
           </View>
         </View>
       </Card>
@@ -144,8 +156,10 @@ const FlatPostsList: FunctionComponent<IProps> = ({
   loaded,
   handleGetPosts,
   handlePostLike,
+  handlePostShare,
 }: IProps) => (
   <FlatList
+    testID="flat-posts-list"
     data={posts}
     onRefresh={() => handleGetPosts(false)}
     refreshing={!loaded}
@@ -153,6 +167,7 @@ const FlatPostsList: FunctionComponent<IProps> = ({
     renderItem={({ item }) => (
       <MemoizedRenderPost
         handlePostLike={handlePostLike}
+        handlePostShare={handlePostShare}
         item={item}
         navigation={navigation}
       />

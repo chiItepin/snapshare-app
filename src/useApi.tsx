@@ -10,6 +10,7 @@ interface IRequestPosts {
   createPost: (content: string) => Promise<AxiosResponse<any>>;
   togglePostLike: (postId: string) => Promise<AxiosResponse<any>>;
   getPosts: (page: number) => Promise<AxiosResponse<any>>;
+  getPost: (postId: string) => Promise<AxiosResponse<any>>;
 }
 
 interface IRequestUser {
@@ -65,6 +66,9 @@ const useApi = (): IApi => {
 
   const fetchPosts = {
     getPosts: (page: number): Promise<AxiosResponse<any>> => axios.get(`${baseUrl}/api/posts?page=${page}`, {
+      headers,
+    }),
+    getPost: (postId: string): Promise<AxiosResponse<any>> => axios.get(`${baseUrl}/api/posts/${postId}`, {
       headers,
     }),
     createPost: (content: string): Promise<AxiosResponse<any>> => axios.post(`${baseUrl}/api/posts`, {

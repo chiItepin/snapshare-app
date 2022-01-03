@@ -1,7 +1,9 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { AxiosResponse, AxiosError } from 'axios';
+import * as Linking from 'expo-linking';
 import {
   View,
+  Share,
 } from 'react-native';
 import {
   Toast,
@@ -135,6 +137,18 @@ const PostsList: FunctionComponent<IProps> = ({
       });
   };
 
+  const handlePostShare = (postId: string): void => {
+    const redirectUrl = Linking.createURL('PostView', {
+      queryParams: { postId },
+    });
+    Share.share({
+      message: redirectUrl,
+    })
+      .catch((error: any) => {
+        setNotificationMessage(error?.message || 'Unknown error');
+      });
+  };
+
   useEffect(() => {
     if (apiLoaded) handleGetPosts(false);
   }, [apiLoaded]);
@@ -159,6 +173,7 @@ const PostsList: FunctionComponent<IProps> = ({
         loaded={loaded}
         handleGetPosts={handleGetPosts}
         handlePostLike={handlePostLike}
+        handlePostShare={handlePostShare}
       />
     </View>
   );
