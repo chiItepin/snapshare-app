@@ -17,6 +17,9 @@ const HelperStyles = StyleSheet.create({
   justifyFlexEnd: {
     justifyContent: 'flex-end',
   },
+  'w-10': {
+    width: '10%',
+  },
   'w-25': {
     width: '25%',
   },
@@ -25,6 +28,9 @@ const HelperStyles = StyleSheet.create({
   },
   'w-75': {
     width: '75%',
+  },
+  'w-90': {
+    width: '90%',
   },
   'w-100': {
     width: '100%',
