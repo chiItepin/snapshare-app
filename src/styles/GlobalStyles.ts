@@ -38,6 +38,20 @@ const styles = StyleSheet.create({
     borderColor: 'lightgrey',
     paddingBottom: 10,
   },
+  postHeaderContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    paddingHorizontal: 15,
+    paddingTop: 10,
+  },
+  postHeaderAuthor: {
+    paddingLeft: 10,
+    fontWeight: 'bold',
+    color: 'grey',
+    width: '100%',
+  },
 });
 
 export default styles;

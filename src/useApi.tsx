@@ -8,6 +8,7 @@ import { IState } from './reducer';
 
 interface IRequestPosts {
   createPost: (content: string) => Promise<AxiosResponse<any>>;
+  togglePostLike: (postId: string) => Promise<AxiosResponse<any>>;
   getPosts: (page: number) => Promise<AxiosResponse<any>>;
 }
 
@@ -69,6 +70,9 @@ const useApi = (): IApi => {
     createPost: (content: string): Promise<AxiosResponse<any>> => axios.post(`${baseUrl}/api/posts`, {
       content,
     }, {
+      headers,
+    }),
+    togglePostLike: (postId: string): Promise<AxiosResponse<any>> => axios.patch(`${baseUrl}/api/posts/${postId}/like`, {}, {
       headers,
     }),
   };

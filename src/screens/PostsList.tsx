@@ -117,6 +117,24 @@ const PostsList: FunctionComponent<IProps> = ({
     </View>
   );
 
+  const handlePostLike = (postId: string): void => {
+    setNotificationMessage('Sending your like...');
+    fetchPosts.togglePostLike(postId)
+      .then((res: AxiosResponse) => {
+        setPosts((prevState) => prevState.map((post) => {
+          const suggestedPost = { ...post };
+          if (post._id === res.data.data._id) {
+            suggestedPost.likes = res.data.data.likes;
+          }
+          return suggestedPost;
+        }));
+        setNotificationMessage('');
+      })
+      .catch(() => {
+        setNotificationMessage('Unknown error');
+      });
+  };
+
   useEffect(() => {
     if (apiLoaded) handleGetPosts(false);
   }, [apiLoaded]);
@@ -140,6 +158,7 @@ const PostsList: FunctionComponent<IProps> = ({
         renderFooter={renderFooter}
         loaded={loaded}
         handleGetPosts={handleGetPosts}
+        handlePostLike={handlePostLike}
       />
     </View>
   );
