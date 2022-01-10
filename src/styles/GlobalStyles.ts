@@ -52,6 +52,15 @@ const styles = StyleSheet.create({
     color: 'grey',
     width: '100%',
   },
+  profileHeader: {
+    position: 'absolute',
+    height: 200,
+    backgroundColor: 'rgb(255, 223, 108)',
+    width: '100%',
+  },
+  profileHeaderBack: {
+    height: 80,
+  },
 });
 
 export default styles;

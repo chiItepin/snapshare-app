@@ -3,8 +3,11 @@ import moment from 'moment';
 import {
   View,
   FlatList,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
 } from 'react-native';
 import {
+  TouchableOpacity,
   Card,
   Button,
   Text,
@@ -28,6 +31,7 @@ interface IProps {
   handleGetPosts: (loadMore: boolean, page?: number) => void;
   handlePostLike: (postId: string) => void;
   handlePostShare: (postId: string) => void;
+  onScroll?: null|((event: NativeSyntheticEvent<NativeScrollEvent>) => void)
 }
 
 interface IRenderPostProps {
@@ -68,6 +72,9 @@ const RenderPost: FunctionComponent<IRenderPostProps> = ({
         <View style={styles.postHeaderContainer}>
           <View style={HelperStyles['w-10']}>
             <Avatar
+              onPress={() => navigation.navigate('ProfileView', {
+                userId: item?.authorId._id || '',
+              })}
               source={item?.authorId.image ? { uri: `data:image/jpeg;base64,${item.authorId.image}` } : undefined}
               size={30}
               label={item.authorId.email.substring(0, 1).toUpperCase()}
@@ -76,7 +83,21 @@ const RenderPost: FunctionComponent<IRenderPostProps> = ({
           </View>
 
           <View style={HelperStyles['w-90']}>
-            <Text numberOfLines={1} style={styles.postHeaderAuthor}>{item?.authorId?.email}</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ProfileView', {
+                userId: item?.authorId._id || '',
+              })}
+              style={styles.postHeaderAuthor}
+            >
+              <Text
+                numberOfLines={1}
+                text90
+                grey30
+                link
+              >
+                {item?.authorId?.email}
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -157,6 +178,7 @@ const FlatPostsList: FunctionComponent<IProps> = ({
   handleGetPosts,
   handlePostLike,
   handlePostShare,
+  onScroll = null,
 }: IProps) => (
   <FlatList
     testID="flat-posts-list"
@@ -175,8 +197,14 @@ const FlatPostsList: FunctionComponent<IProps> = ({
     ListHeaderComponent={renderHeader()}
     ListFooterComponent={renderFooter()}
     keyExtractor={(item) => item._id}
+    onScroll={onScroll
+      ? (event: NativeSyntheticEvent<NativeScrollEvent>) => onScroll(event) : undefined}
     ListEmptyComponent={loaded ? <Text style={{ textAlign: 'center' }}>No records found</Text> : null}
   />
 );
+
+FlatPostsList.defaultProps = {
+  onScroll: null,
+};
 
 export default FlatPostsList;

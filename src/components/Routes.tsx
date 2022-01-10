@@ -10,7 +10,12 @@ import {
 } from 'react-native-ui-lib';
 import * as Linking from 'expo-linking';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {
+  NavigationProp,
+  useNavigation,
+  useNavigationState,
+  Route,
+} from '@react-navigation/native';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -30,6 +35,7 @@ import Login from '../screens/user/Login';
 import Account from '../screens/user/Account';
 import SignUpView from '../screens/user/SignUpView';
 import PostView from '../screens/posts/PostView';
+import ProfileView from '../screens/user/ProfileView';
 import IUser from '../screens/templates/user';
 
 const Stack = createStackNavigator();
@@ -43,16 +49,12 @@ interface IPropsStack {
   navigation: IDrawerNavigationProps;
 }
 
-/**
- * stackOptions
- * @param {Object} navigation
- * @returns {Object}
- */
-const stackOptions = (navigation: IDrawerNavigationProps): object => ({
+const stackOptions = (navigation: IDrawerNavigationProps, isHeaderTransparent = false): object => ({
   headerTitleAlign: 'center',
   headerTintColor: '#fff',
   headerStyle: { backgroundColor: '#5446f6' },
   cardStyle: { backgroundColor: '#fff' },
+  headerTransparent: isHeaderTransparent,
   headerLeft: (props: HeaderBackButtonProps) => (!props.canGoBack
     ? (
       <NavigationDrawerStructure toggleDrawer={() => navigation.toggleDrawer()} />
@@ -79,15 +81,31 @@ const NavigationDrawerStructure: FunctionComponent<IDrawerNavigationProps> = ({
   </View>
 );
 
-const PostsStack: FunctionComponent<IPropsStack> = ({ navigation }: IPropsStack) => (
-  <Stack.Navigator
-    initialRouteName="PostsList"
-    screenOptions={stackOptions(navigation)}
-  >
-    <Stack.Screen name="PostsList" component={PostsList} options={{ title: 'Home' }} />
-    <Stack.Screen name="PostView" component={PostView} options={{ title: 'Viewing Post' }} />
-  </Stack.Navigator>
-);
+const PostsStack: FunctionComponent<IPropsStack> = ({ navigation }: IPropsStack) => {
+  const [navigationState] = useNavigationState((state) => state.routes);
+
+  const isHeaderTransparent = React.useCallback((): boolean => {
+    if (navigationState?.state?.routes) {
+      const activeRoutes: any = navigationState.state.routes;
+      if (activeRoutes
+        && activeRoutes.filter((route: Route<keyof RootScreenParams>) => route.name === 'ProfileView').length) {
+        return true;
+      }
+    }
+    return false;
+  }, [navigationState]);
+
+  return (
+    <Stack.Navigator
+      initialRouteName="PostsList"
+      screenOptions={stackOptions(navigation, isHeaderTransparent())}
+    >
+      <Stack.Screen name="PostsList" component={PostsList} options={{ title: 'Home' }} />
+      <Stack.Screen name="PostView" component={PostView} options={{ title: 'Viewing Post' }} />
+      <Stack.Screen name="ProfileView" component={ProfileView} options={{ title: 'Viewing profile' }} />
+    </Stack.Navigator>
+  );
+};
 
 const LoginStack: FunctionComponent<IPropsStack> = ({ navigation }: IPropsStack) => (
   <Stack.Navigator

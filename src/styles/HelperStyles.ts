@@ -35,6 +35,19 @@ const HelperStyles = StyleSheet.create({
   'w-100': {
     width: '100%',
   },
+  'h-100': {
+    height: '100%',
+  },
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 2,
+  },
   textCenter: {
     textAlign: 'center',
   },
