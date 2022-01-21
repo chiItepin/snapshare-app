@@ -16,13 +16,11 @@ import {
 } from 'react-native-ui-lib';
 import { NavigationProp } from '@react-navigation/native';
 import { AxiosResponse } from 'axios';
-import { connect } from 'react-redux';
 import IUser from '../templates/user';
 import IPost from '../templates/post';
 import FlatPostsList from '../../components/posts/FlatPostsList';
 import styles from '../../styles/GlobalStyles';
 import helperStyles from '../../styles/HelperStyles';
-import { IState } from '../../reducer';
 import useApi from '../../useApi';
 import RootScreenParams from '../RootScreenParams';
 
@@ -32,7 +30,6 @@ interface IParams {
 
 interface IProps {
   navigation: NavigationProp<RootScreenParams>;
-  user: IUser;
   route: {
     params: IParams,
   };
@@ -40,7 +37,6 @@ interface IProps {
 
 const ProfileView: FunctionComponent<IProps> = ({
   navigation,
-  user,
   route,
 }: IProps) => {
   const [notificationMessage, setNotificationMessage] = useState('');
@@ -132,6 +128,7 @@ const ProfileView: FunctionComponent<IProps> = ({
 
   useEffect(() => {
     if (apiLoaded) handleGetUserPosts(false);
+    navigation.setOptions({ headerTransparent: true });
   }, [apiLoaded]);
 
   const renderHeader = React.useCallback(() => (
@@ -213,8 +210,4 @@ const ProfileView: FunctionComponent<IProps> = ({
   );
 };
 
-const mapStateToProps = (state: IState) => ({
-  user: state.user,
-});
-
-export default connect(mapStateToProps)(ProfileView);
+export default ProfileView;

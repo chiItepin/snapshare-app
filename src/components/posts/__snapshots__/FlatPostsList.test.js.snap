@@ -106,7 +106,7 @@ exports[`FlatPostsList renders and handles events 1`] = `
               "height": undefined,
               "marginBottom": 5,
               "opacity": 1,
-              "overflow": "hidden",
+              "overflow": "visible",
               "shadowColor": "#A6ACB1",
               "shadowOffset": Object {
                 "height": 5,
@@ -139,28 +139,25 @@ exports[`FlatPostsList renders and handles events 1`] = `
             >
               <View
                 accessibilityLabel="Avatar"
-                accessibilityRole="image"
-                accessible={false}
+                accessibilityRole="button"
+                accessible={true}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    Object {},
-                    Object {},
-                    Object {},
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "borderRadius": 15,
-                        "height": 30,
-                        "justifyContent": "center",
-                        "width": 30,
-                      },
-                      undefined,
-                    ],
-                  ]
+                  Object {
+                    "alignItems": "center",
+                    "borderRadius": 15,
+                    "height": 30,
+                    "justifyContent": "center",
+                    "opacity": 1,
+                    "width": 30,
+                  }
                 }
               >
                 <View
@@ -237,33 +234,60 @@ exports[`FlatPostsList renders and handles events 1`] = `
                 }
               }
             >
-              <Text
-                numberOfLines={1}
+              <View
+                accessibilityRole="button"
+                accessible={true}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "textAlign": "left",
-                    },
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    Object {},
-                    undefined,
-                    undefined,
-                    undefined,
-                    Object {
-                      "color": "grey",
-                      "fontWeight": "bold",
-                      "paddingLeft": 10,
-                      "width": "100%",
-                    },
-                  ]
+                  Object {
+                    "color": "grey",
+                    "fontWeight": "bold",
+                    "opacity": 1,
+                    "paddingLeft": 10,
+                    "width": "100%",
+                  }
                 }
               >
-                xxx@xxx.com
-              </Text>
+                <Text
+                  grey30={true}
+                  link={true}
+                  numberOfLines={1}
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "transparent",
+                        "textAlign": "left",
+                      },
+                      Object {
+                        "fontFamily": "System",
+                        "fontSize": 12,
+                        "fontWeight": "700",
+                        "lineHeight": 16,
+                      },
+                      Object {
+                        "color": "#6E7881",
+                      },
+                      undefined,
+                      undefined,
+                      Object {},
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                  text90={true}
+                >
+                  xxx@xxx.com
+                </Text>
+              </View>
             </View>
           </View>
           <View
@@ -395,7 +419,6 @@ exports[`FlatPostsList renders and handles events 1`] = `
             style={
               Array [
                 Object {
-                  "flex": 1,
                   "flexDirection": "row",
                   "flexWrap": "wrap",
                 },
@@ -418,7 +441,6 @@ exports[`FlatPostsList renders and handles events 1`] = `
               style={
                 Array [
                   Object {
-                    "flex": 1,
                     "flexDirection": "row",
                     "flexWrap": "wrap",
                   },

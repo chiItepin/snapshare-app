@@ -4,7 +4,6 @@ import {
 
 const HelperStyles = StyleSheet.create({
   row: {
-    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
@@ -89,6 +88,9 @@ const HelperStyles = StyleSheet.create({
   },
   marginBottomMed: {
     marginBottom: 12,
+  },
+  marginHorizontalMed: {
+    marginHorizontal: 12,
   },
   bgWhite: {
     backgroundColor: 'white',
