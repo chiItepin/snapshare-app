@@ -188,6 +188,7 @@ exports[`FlatPostsList renders and handles events 1`] = `
                       ],
                     ]
                   }
+                  testID="undefined.container"
                 >
                   <Text
                     numberOfLines={1}
@@ -518,6 +519,7 @@ exports[`FlatPostsList renders and handles events 1`] = `
                         ],
                       ]
                     }
+                    testID="undefined.label"
                   >
                     Likes 0
                   </Text>
@@ -626,6 +628,7 @@ exports[`FlatPostsList renders and handles events 1`] = `
                         ],
                       ]
                     }
+                    testID="undefined.label"
                   >
                     Share
                   </Text>

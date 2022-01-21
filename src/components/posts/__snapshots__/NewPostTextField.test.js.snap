@@ -131,6 +131,7 @@ exports[`NewPostTextField renders and handles events 1`] = `
                 ],
               ]
             }
+            testID="undefined.label"
           >
             Close
           </Text>
@@ -217,6 +218,7 @@ exports[`NewPostTextField renders and handles events 1`] = `
                 ],
               ]
             }
+            testID="undefined.label"
           >
             Submit
           </Text>
