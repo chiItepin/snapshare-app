@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import {
   View,
+  SafeAreaView,
 } from 'react-native';
 import {
   Modal,
@@ -26,7 +27,7 @@ const NewPostTextField: FunctionComponent<IProps> = ({
   onSubmit,
 }: IProps) => (
   <Modal visible={isVisible} animationType="slide">
-    <View style={[styles.container, HelperStyles.row]}>
+    <SafeAreaView style={[styles.container, HelperStyles.row, HelperStyles.marginHorizontalMed]}>
       <View style={[HelperStyles['w-50'], HelperStyles.paddingRightMed]}>
         <Button
           onPress={() => setIsNewPostTextFieldVisible(false)}
@@ -56,7 +57,7 @@ const NewPostTextField: FunctionComponent<IProps> = ({
           maxLength={300}
         />
       </View>
-    </View>
+    </SafeAreaView>
   </Modal>
 );
 

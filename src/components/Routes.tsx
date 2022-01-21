@@ -10,7 +10,10 @@ import {
 } from 'react-native-ui-lib';
 import * as Linking from 'expo-linking';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {
+  NavigationProp,
+  useNavigation,
+} from '@react-navigation/native';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -30,6 +33,7 @@ import Login from '../screens/user/Login';
 import Account from '../screens/user/Account';
 import SignUpView from '../screens/user/SignUpView';
 import PostView from '../screens/posts/PostView';
+import ProfileView from '../screens/user/ProfileView';
 import IUser from '../screens/templates/user';
 
 const Stack = createStackNavigator();
@@ -43,11 +47,6 @@ interface IPropsStack {
   navigation: IDrawerNavigationProps;
 }
 
-/**
- * stackOptions
- * @param {Object} navigation
- * @returns {Object}
- */
 const stackOptions = (navigation: IDrawerNavigationProps): object => ({
   headerTitleAlign: 'center',
   headerTintColor: '#fff',
@@ -86,6 +85,7 @@ const PostsStack: FunctionComponent<IPropsStack> = ({ navigation }: IPropsStack)
   >
     <Stack.Screen name="PostsList" component={PostsList} options={{ title: 'Home' }} />
     <Stack.Screen name="PostView" component={PostView} options={{ title: 'Viewing Post' }} />
+    <Stack.Screen name="ProfileView" component={ProfileView} options={{ title: 'Viewing profile' }} />
   </Stack.Navigator>
 );
 

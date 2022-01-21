@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
   },
   cardChild: {
     marginBottom: 5,
-    overflow: 'hidden',
   },
   accountAvatarContainer: {
     marginTop: 5,
@@ -51,6 +50,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'grey',
     width: '100%',
+  },
+  profileHeader: {
+    position: 'absolute',
+    height: 200,
+    backgroundColor: 'rgb(255, 223, 108)',
+    width: '100%',
+  },
+  profileHeaderBack: {
+    height: 90,
   },
 });
 

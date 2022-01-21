@@ -36,7 +36,8 @@ exports[`NewPostTextField renders and handles events 1`] = `
       ]
     }
   >
-    <View
+    <RCTSafeAreaView
+      emulateUnlessSupported={true}
       style={
         Array [
           Object {
@@ -46,9 +47,11 @@ exports[`NewPostTextField renders and handles events 1`] = `
             "padding": 12,
           },
           Object {
-            "flex": 1,
             "flexDirection": "row",
             "flexWrap": "wrap",
+          },
+          Object {
+            "marginHorizontal": 12,
           },
         ]
       }
@@ -128,6 +131,7 @@ exports[`NewPostTextField renders and handles events 1`] = `
                 ],
               ]
             }
+            testID="undefined.label"
           >
             Close
           </Text>
@@ -214,6 +218,7 @@ exports[`NewPostTextField renders and handles events 1`] = `
                 ],
               ]
             }
+            testID="undefined.label"
           >
             Submit
           </Text>
@@ -437,7 +442,7 @@ exports[`NewPostTextField renders and handles events 1`] = `
           </View>
         </View>
       </View>
-    </View>
+    </RCTSafeAreaView>
   </View>
 </Modal>
 `;

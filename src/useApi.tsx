@@ -16,6 +16,7 @@ interface IRequestPosts {
 interface IRequestUser {
   updateImage: (id: string, image: string) => Promise<AxiosResponse<any>>;
   getUser: (id: string) => Promise<AxiosResponse<any>>;
+  getUserPosts: (id: string, page: number) => Promise<AxiosResponse<any>>;
   createUser: (email: string, password: string, confirmPassword: string)
   => Promise<AxiosResponse<any>>;
 }
@@ -48,6 +49,9 @@ const useApi = (): IApi => {
 
   const User = {
     getUser: (id: string): Promise<AxiosResponse<any>> => axios.get(`${baseUrl}/api/users/${id}`, {
+      headers,
+    }),
+    getUserPosts: (id: string, page: number): Promise<AxiosResponse<any>> => axios.get(`${baseUrl}/api/users/${id}/posts?page=${page}`, {
       headers,
     }),
     createUser: (email: string, password: string, confirmPassword: string): Promise<AxiosResponse<any>> => axios.post(`${baseUrl}/api/users/create`, {

@@ -111,7 +111,7 @@ const PostsList: FunctionComponent<IProps> = ({
         <Button
           onPress={() => handleGetPosts(true, nextPage)}
           label="Load more"
-          disabled={loading}
+          disabled={loading || nextPage === null}
           enableShadow
           borderRadius={6}
         />

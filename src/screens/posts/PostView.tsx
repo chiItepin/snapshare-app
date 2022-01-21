@@ -1,16 +1,18 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
-import moment from 'moment';
 import { AxiosResponse } from 'axios';
+import { NavigationProp } from '@react-navigation/native';
+import * as Linking from 'expo-linking';
+import {
+  Share,
+} from 'react-native';
 import {
   Toast,
-  Card,
-  Text,
-  Button,
   LoaderScreen,
   View,
 } from 'react-native-ui-lib';
+import Post from '../../components/posts/Post';
+import RootScreenParams from '../../screens/RootScreenParams';
 import styles from '../../styles/GlobalStyles';
-import HelperStyles from '../../styles/HelperStyles';
 import IPost from '../../screens/templates/post';
 import useApi from '../../useApi';
 
@@ -22,16 +24,51 @@ interface IProps {
   route: {
     params: IParams,
   };
+  navigation: NavigationProp<RootScreenParams>;
 }
 
 const PostView: FunctionComponent<IProps> = ({
   route,
+  navigation,
 }: IProps) => {
   const [post, setPost] = useState<IPost>();
   const [loaded, setLoaded] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
   const { fetchPosts, apiLoaded } = useApi();
   const { postId } = route.params;
+
+  const handlePostLike = (id: string): void => {
+    setNotificationMessage('Sending your like...');
+    fetchPosts.togglePostLike(id)
+      .then((res: AxiosResponse) => {
+        setPost((prevState) => {
+          if (prevState) {
+            const suggestedPost = { ...prevState };
+            if (suggestedPost._id === res.data.data._id) {
+              suggestedPost.likes = res.data.data.likes;
+            }
+            return suggestedPost;
+          }
+          return prevState;
+        });
+        setNotificationMessage('');
+      })
+      .catch(() => {
+        setNotificationMessage('Unknown error');
+      });
+  };
+
+  const handlePostShare = (id: string): void => {
+    const redirectUrl = Linking.createURL('PostView', {
+      queryParams: { postId: id },
+    });
+    Share.share({
+      message: redirectUrl,
+    })
+      .catch((error: any) => {
+        setNotificationMessage(error?.message || 'Unknown error');
+      });
+  };
 
   useEffect(() => {
     if (postId && apiLoaded) {
@@ -75,51 +112,13 @@ const PostView: FunctionComponent<IProps> = ({
         message={notificationMessage}
       />
       <View key={post._id} style={[styles.card]}>
-        <Card style={{ marginBottom: 5 }}>
-          <Card.Section
-            bg-white
-            content={[
-              { text: post.content, text70: true, grey10: true },
-              { text: post?.authorId?.email, text90: true, grey40: true },
-              { text: moment(post.createdAt).format('MMM Do YY'), text90: true, grey50: true },
-            ]}
-            style={{ padding: 20 }}
-          />
-
-          <View style={[
-            HelperStyles.row,
-            HelperStyles.paddingHorizontalBig,
-            HelperStyles.justifySpaceBetween,
-          ]}
-          >
-            <View style={[HelperStyles.row,
-              HelperStyles['w-50'],
-            ]}
-            >
-              <View style={HelperStyles.paddingRightMed}>
-                <Button
-                  text90
-                  link
-                  label={`Likes ${post.likes.length}`}
-                />
-              </View>
-
-              <View>
-                <Text
-                  text90
-                  grey40
-                  link
-                >
-                  {`Comments ${post.comments.length}`}
-                </Text>
-              </View>
-            </View>
-
-            <View style={[HelperStyles['w-50'], HelperStyles.row, HelperStyles.justifyFlexEnd]}>
-              <Button text90 link label="Share" />
-            </View>
-          </View>
-        </Card>
+        <Post
+          item={post}
+          handlePostLike={handlePostLike}
+          handlePostShare={handlePostShare}
+          navigation={navigation}
+          hasRedirectToPostView={false}
+        />
       </View>
     </View>
   );

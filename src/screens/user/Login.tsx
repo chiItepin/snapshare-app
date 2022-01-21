@@ -87,6 +87,7 @@ const Login:FunctionComponent<IPropsNavigation> = ({
               setLoadingUserToken(false);
             })
             .catch(() => {
+              setLoadingUserToken(false);
               setNotificationMessage('Failed retrieving user');
             });
         })
