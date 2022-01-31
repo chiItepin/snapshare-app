@@ -193,7 +193,7 @@ const ProfileView: FunctionComponent<IProps> = ({
         message={notificationMessage}
       />
 
-      <View style={[helperStyles.row]}>
+      <View>
         <FlatPostsList
           posts={posts}
           navigation={navigation}

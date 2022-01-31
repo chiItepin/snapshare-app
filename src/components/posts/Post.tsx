@@ -96,6 +96,20 @@ const Post: FunctionComponent<IProps> = ({
         style={{ padding: 20 }}
       />
 
+      {item.images.length !== 0 && (
+        <Card.Section
+          imageSource={{
+            uri: `data:image/jpeg;base64,${item.images[0].url}`,
+          }}
+          imageStyle={{
+            height: 200,
+            width: '100%',
+            resizeMode: 'cover',
+            marginBottom: 10,
+          }}
+        />
+      )}
+
       <View style={[HelperStyles.row,
         HelperStyles.paddingHorizontalBig,
         HelperStyles.bgWhite,
@@ -150,6 +164,7 @@ const arePropsEqual = (prevProps: IProps, nextProps: IProps) => (
   && prevProps.item.content === nextProps.item.content
   && prevProps.item.comments.length === nextProps.item.comments.length
   && prevProps.item.likes.length === nextProps.item.likes.length
+  && prevProps.item.images.length === nextProps.item.images.length
   && prevProps.hasRedirectToPostView === nextProps.hasRedirectToPostView
 );
 

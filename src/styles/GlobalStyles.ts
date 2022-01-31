@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'lightgrey',
     paddingBottom: 10,
+    maxHeight: 200,
   },
   postHeaderContainer: {
     flexDirection: 'row',
@@ -59,6 +60,42 @@ const styles = StyleSheet.create({
   },
   profileHeaderBack: {
     height: 90,
+  },
+  newPostTextFieldContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    height: '100%',
+  },
+  newPostTextFieldGalleryContainer: {
+    width: '100%',
+    marginBottom: 20,
+    height: 65,
+  },
+  newPostTextFieldGalleryPickImageWrapper: {
+    height: '100%',
+    width: 65,
+    padding: 5,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: 'rgb(183, 173, 255)',
+    borderStyle: 'dashed',
+  },
+  newPostTextFieldGalleryImageWrapper: {
+    height: '100%',
+    width: 65,
+    borderRadius: 5,
+    overflow: 'hidden',
+  },
+  newPostTextFieldGalleryPickImage: {
+    resizeMode: 'contain',
+    width: '100%',
+    height: '100%',
+  },
+  newPostTextFieldGalleryImage: {
+    resizeMode: 'cover',
+    width: '100%',
+    height: '100%',
   },
 });
 
