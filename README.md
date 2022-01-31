@@ -1,6 +1,6 @@
 # snapshare-app
 
-<img src="https://i.imgur.com/AMoqXHR.png">
+<img src="https://i.imgur.com/AMoqXHR.png" style="width: 200px">
 
 ## prerequisites
 - Expo account for deployments
