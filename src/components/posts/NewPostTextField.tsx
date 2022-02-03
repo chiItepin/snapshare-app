@@ -11,7 +11,7 @@ import {
   Incubator,
   Image,
 } from 'react-native-ui-lib';
-import * as ImagePicker from 'expo-image-picker';
+import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker';
 import styles from '../../styles/GlobalStyles';
 import HelperStyles from '../../styles/HelperStyles';
 import ImageGallery from '../../../assets/image-gallery.png';
@@ -46,8 +46,8 @@ const NewPostTextField: FunctionComponent<IProps> = ({
 }: IProps) => {
   const handlePickImage = async () => {
     // No permissions request is necessary for launching the image library
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    const result = await launchImageLibraryAsync({
+      mediaTypes: MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 4],
       quality: 0.3,

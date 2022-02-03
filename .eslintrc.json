@@ -6,7 +6,7 @@
    ],
    "parser": "@typescript-eslint/parser",
    "env": {
-    "jest/globals": true
+      "jest/globals": true
     },
     "parserOptions": {
       "ecmaVersion": 6,

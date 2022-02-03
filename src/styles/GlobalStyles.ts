@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   card: {
     flex: 1,
-    paddingVertical: 12,
+    paddingVertical: 10,
     paddingHorizontal: 5,
     width: '100%',
   },

@@ -18,6 +18,7 @@ test('FlatPostsList renders and handles events', () => {
       _id: 'xxx',
       likes: [],
       comments: [],
+      images: [],
       content: 'lorem ipsum',
       authorId: {
         email: 'xxx@xxx.com',

@@ -4,11 +4,13 @@ exports[`FlatPostsList renders and handles events 1`] = `
 <RCTScrollView
   ListEmptyComponent={
     <Text
+      grey40={true}
       style={
         Object {
           "textAlign": "center",
         }
       }
+      text90={true}
     >
       No records found
     </Text>
@@ -26,6 +28,7 @@ exports[`FlatPostsList renders and handles events 1`] = `
         "comments": Array [],
         "content": "lorem ipsum",
         "createdAt": "2021-09-13T06:54:27.440+00:00",
+        "images": Array [],
         "likes": Array [],
       },
     ]
@@ -77,7 +80,7 @@ exports[`FlatPostsList renders and handles events 1`] = `
           Object {
             "flex": 1,
             "paddingHorizontal": 5,
-            "paddingVertical": 12,
+            "paddingVertical": 10,
             "width": "100%",
           }
         }
@@ -302,7 +305,7 @@ exports[`FlatPostsList renders and handles events 1`] = `
                 },
                 Object {
                   "grey50": true,
-                  "text": "Sep 13th 21",
+                  "text": "Sep 12th 21",
                   "text90": true,
                 },
               ]
@@ -412,7 +415,7 @@ exports[`FlatPostsList renders and handles events 1`] = `
                 testID="undefined.text.1"
                 text90={true}
               >
-                Sep 13th 21
+                Sep 12th 21
               </Text>
             </View>
           </View>
