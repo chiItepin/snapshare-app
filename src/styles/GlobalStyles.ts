@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   profileHeader: {
     position: 'absolute',
-    height: 200,
+    height: 300,
     backgroundColor: 'rgb(255, 223, 108)',
     width: '100%',
   },
@@ -96,6 +96,10 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     width: '100%',
     height: '100%',
+  },
+  followBtn: {
+    width: 120,
+    alignSelf: 'flex-start',
   },
 });
 

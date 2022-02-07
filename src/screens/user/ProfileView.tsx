@@ -1,9 +1,10 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import {
   Share,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
+  SafeAreaView,
 } from 'react-native';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import * as Linking from 'expo-linking';
 import {
   Button,
@@ -13,16 +14,18 @@ import {
   Avatar,
   Colors,
   LoaderScreen,
+  Assets,
 } from 'react-native-ui-lib';
 import { NavigationProp } from '@react-navigation/native';
-import { AxiosResponse } from 'axios';
 import IUser from '../templates/user';
 import IPost from '../templates/post';
+import IFollower from '../templates/follower';
 import FlatPostsList from '../../components/posts/FlatPostsList';
 import styles from '../../styles/GlobalStyles';
 import helperStyles from '../../styles/HelperStyles';
 import useApi from '../../useApi';
 import RootScreenParams from '../RootScreenParams';
+import { IState } from '../../reducer';
 
 interface IParams {
   userId: string;
@@ -33,21 +36,59 @@ interface IProps {
   route: {
     params: IParams,
   };
+  user: IUser;
+  followers: IFollower[];
+  setFollowers: (followers: IFollower[]) => void;
 }
 
 const ProfileView: FunctionComponent<IProps> = ({
   navigation,
   route,
+  user,
+  followers,
+  setFollowers,
 }: IProps) => {
   const [notificationMessage, setNotificationMessage] = useState('');
   const [selectedUser, setSelectedUser] = useState<IUser>();
   const [posts, setPosts] = useState<IPost[]>([]);
   const [nextPage, setNextPage] = useState(1);
   const [loaded, setLoaded] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [hasHeaderShadow, setHasHeaderShadow] = useState(false);
-  const { userId } = route.params;
-  const { User, apiLoaded, fetchPosts } = useApi();
+  const [loading, setLoading] = useState(false);
+  const [initialLoaded, setInitialLoaded] = useState(false);
+  const { userId: selectedUserId } = route.params;
+  const {
+    User,
+    apiLoaded,
+    fetchPosts,
+    fetchFollowers,
+  } = useApi();
+
+  const isUserFollowed = React.useCallback(() => {
+    const [followedUser] = followers.filter((follower) => follower.user._id === selectedUserId);
+    return !!followedUser;
+  }, [followers, selectedUserId]);
+
+  const handleFollowing = (): void => {
+    setNotificationMessage('Loading...');
+    setLoading(true);
+    Promise.all([
+      fetchFollowers.addFollower(user._id || '', selectedUserId),
+      fetchFollowers.getFollowers(user._id || '', 1),
+    ])
+      .then((responses) => {
+        responses.forEach((res, index) => {
+          if (index === 1) {
+            setFollowers(res.data.data.docs);
+          }
+        });
+        setNotificationMessage('');
+        setLoading(false);
+      }).catch(() => {
+        setNotificationMessage('Unknown error');
+        setLoaded(true);
+        setLoading(false);
+      });
+  };
 
   const handleGetUserPosts = (loadMore?: boolean, page = 1): void => {
     setLoaded(false);
@@ -57,9 +98,9 @@ const ProfileView: FunctionComponent<IProps> = ({
     if (loadMore === false) {
       setPosts([]);
     }
-    User.getUserPosts(userId, page).then((res: AxiosResponse<any>) => {
-      setLoading(false);
+    User.getUserPosts(selectedUserId, page).then((res) => {
       setLoaded(true);
+      setInitialLoaded(true);
       if (loadMore === false) {
         setPosts(res.data.data.docs);
       } else {
@@ -67,8 +108,9 @@ const ProfileView: FunctionComponent<IProps> = ({
       }
       setNextPage(res.data.data.nextPage);
       setNotificationMessage('');
+      setLoading(false);
     }).catch(() => {
-      setNotificationMessage('Unknown error');
+      setNotificationMessage('Unknown error occurred');
       setLoaded(true);
       setLoading(false);
     });
@@ -77,7 +119,7 @@ const ProfileView: FunctionComponent<IProps> = ({
   const handlePostLike = (postId: string): void => {
     setNotificationMessage('Sending your like...');
     fetchPosts.togglePostLike(postId)
-      .then((res: AxiosResponse) => {
+      .then((res) => {
         setPosts((prevState) => prevState.map((post) => {
           const suggestedPost = { ...post };
           if (post._id === res.data.data._id) {
@@ -104,30 +146,25 @@ const ProfileView: FunctionComponent<IProps> = ({
       });
   };
 
-  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (event.nativeEvent.contentOffset.y === 0) {
-      setHasHeaderShadow(false);
-    } else {
-      setHasHeaderShadow(true);
-    }
-  };
-
   useEffect(() => {
-    if (userId && apiLoaded) {
-      User.getUser(userId)
-        .then((res: AxiosResponse) => {
+    if (selectedUserId && apiLoaded) {
+      User.getUser(selectedUserId)
+        .then((res) => {
+          setLoading(false);
           const requestedUser = res.data.data as IUser;
           setSelectedUser(requestedUser);
-          navigation.setOptions({ title: `@${requestedUser.email}` });
+          navigation.setOptions({ title: '', headerTintColor: 'rgb(88, 72, 255)' });
         })
         .catch(() => {
           setNotificationMessage('Error retrieving user');
         });
     }
-  }, [userId, apiLoaded]);
+  }, [selectedUserId, apiLoaded]);
 
   useEffect(() => {
-    if (apiLoaded) handleGetUserPosts(false);
+    if (apiLoaded) {
+      handleGetUserPosts(false);
+    }
     navigation.setOptions({ headerTransparent: true });
   }, [apiLoaded]);
 
@@ -150,8 +187,22 @@ const ProfileView: FunctionComponent<IProps> = ({
         ]}
         style={{ padding: 20 }}
       />
+
+      {user._id !== selectedUserId && (
+        <View style={[helperStyles.paddingHorizontalMed, helperStyles.marginBottomMed]}>
+          <Button
+            onPress={() => handleFollowing()}
+            style={styles.followBtn}
+            label={isUserFollowed() ? 'Following' : 'Follow'}
+            borderRadius={30}
+            iconSource={Assets.icons.plusSmall}
+            outline={!isUserFollowed()}
+            // disabled={loading}
+          />
+        </View>
+      )}
     </Card>
-  ), [selectedUser]);
+  ), [selectedUser, followers]);
 
   const renderFooter = React.useCallback(() => (
     <View style={[helperStyles.marginBottomBig]}>
@@ -167,21 +218,27 @@ const ProfileView: FunctionComponent<IProps> = ({
     </View>
   ), [nextPage, loading]);
 
-  if (!selectedUser) {
+  if (!selectedUser || !initialLoaded) {
     return (
       <View flex right paddingR-20>
+        <Toast
+          visible={!!notificationMessage}
+          position="bottom"
+          onDismiss={() => setNotificationMessage('')}
+          showDismiss
+          backgroundColor="black"
+          autoDismiss={5000}
+          message={notificationMessage}
+        />
+
         <LoaderScreen message="Loading..." overlay />
       </View>
     );
   }
 
   return (
-    <View style={styles.containerNoPadding}>
+    <SafeAreaView style={[styles.containerNoPadding]}>
       <View style={[styles.profileHeader]} />
-
-      <View style={hasHeaderShadow
-        ? [styles.profileHeaderBack, helperStyles.shadow] : [styles.profileHeaderBack]}
-      />
 
       <Toast
         visible={!!notificationMessage}
@@ -193,7 +250,7 @@ const ProfileView: FunctionComponent<IProps> = ({
         message={notificationMessage}
       />
 
-      <View>
+      <View style={{ height: '100%' }}>
         <FlatPostsList
           posts={posts}
           navigation={navigation}
@@ -203,11 +260,22 @@ const ProfileView: FunctionComponent<IProps> = ({
           handleGetPosts={handleGetUserPosts}
           handlePostLike={handlePostLike}
           handlePostShare={handlePostShare}
-          onScroll={handleScroll}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
-export default ProfileView;
+const mapStateToProps = (state: IState) => ({
+  user: state.user,
+  followers: state.followers,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setFollowers: (followers: IFollower[]) => dispatch({
+    type: 'SET_FOLLOWERS',
+    payload: followers,
+  }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileView);

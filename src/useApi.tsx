@@ -23,11 +23,18 @@ interface IRequestUser {
   => Promise<AxiosResponse<any>>;
 }
 
+interface IRequestFollower {
+  getFollowers: (userId: string, page: number) => Promise<AxiosResponse<any>>;
+  addFollower: (byUserId: string, userId: string) => Promise<AxiosResponse<any>>;
+}
+
 export interface IApi {
   apiLoaded: boolean;
   fetchPosts: IRequestPosts;
   User: IRequestUser;
   loginUser: (email: string, password: string) => Promise<AxiosResponse<any>>;
+  fetchFollowers: IRequestFollower;
+
 }
 
 const useApi = (): IApi => {
@@ -93,6 +100,18 @@ const useApi = (): IApi => {
     }),
   };
 
+  const fetchFollowers = {
+    getFollowers: (userId: string, page: number): Promise<AxiosResponse<any>> => axios.get(`${baseUrl}/api/followers/${userId}?page=${page}&limit=500`, {
+      headers,
+    }),
+    addFollower: (byUserId: string, userId: string): Promise<AxiosResponse<any>> => axios.post(`${baseUrl}/api/followers`, {
+      byUserId,
+      user: userId,
+    }, {
+      headers,
+    }),
+  };
+
   useEffect(() => {
     const getToken = async () => {
       AsyncStorage.getItem('@user').then((value: any) => {
@@ -114,6 +133,7 @@ const useApi = (): IApi => {
     loginUser,
     fetchPosts,
     User,
+    fetchFollowers,
   };
 };
 

@@ -401,6 +401,7 @@ exports[`NewPostTextField renders and handles events 1`] = `
                     ],
                   ]
                 }
+                testID="undefined.charCounter"
               >
                 5/300
               </Text>

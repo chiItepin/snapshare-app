@@ -1,8 +1,14 @@
 import IUser from '../screens/templates/user';
 
+interface IFollower {
+  user: string & IUser;
+  byUserId: string;
+}
+
 export interface IState {
-  user: IUser,
-  posts: any[],
+  user: IUser;
+  posts: any[];
+  followers: IFollower[];
 }
 
 export interface IActions {
@@ -19,6 +25,7 @@ const initialState: IState = {
     image: '',
   },
   posts: [],
+  followers: [],
 };
 
 const Reducer = (state: IState = initialState, action: IActions): IState => {
@@ -27,6 +34,11 @@ const Reducer = (state: IState = initialState, action: IActions): IState => {
       return {
         ...state,
         user: action.payload,
+      };
+    case 'SET_FOLLOWERS':
+      return {
+        ...state,
+        followers: action.payload,
       };
     default:
       return state;

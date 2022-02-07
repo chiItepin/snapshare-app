@@ -26,23 +26,30 @@ import RootScreenParams from '../RootScreenParams';
 type TSetUser = (userModel: IUser) => void
 
 interface DispatchProps {
-  setUser: TSetUser
+  setUser: TSetUser;
 }
 interface IPropsNavigation {
   navigation: NavigationProp<RootScreenParams>;
-  setUser: TSetUser
 }
 
-const Login:FunctionComponent<IPropsNavigation> = ({
+interface IProps extends IPropsNavigation {
+  setUser: TSetUser;
+}
+
+const Login:FunctionComponent<IProps> = ({
   navigation,
   setUser,
-}: IPropsNavigation) => {
+}: IProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [loadingUserToken, setLoadingUserToken] = useState(true);
   const [notificationMessage, setNotificationMessage] = useState('');
-  const { loginUser, apiLoaded, User } = useApi();
+  const {
+    loginUser,
+    apiLoaded,
+    User,
+  } = useApi();
 
   const handleLogin = (): void => {
     setLoading(true);
@@ -71,20 +78,22 @@ const Login:FunctionComponent<IPropsNavigation> = ({
   };
 
   useEffect(() => {
-    const getUserToken = async () => {
+    const getUserToken = () => {
       setLoadingUserToken(true);
       AsyncStorage.getItem('@user')
         .then((value: any) => {
           const userModel = JSON.parse(value) as IUser;
-
-          // retrieve user
-          User.getUser(userModel._id || '')
-            .then((res: AxiosResponse) => {
-              setUser({
-                ...userModel,
-                image: res.data.data.image,
+          Promise.all([
+            User.getUser(userModel._id || ''),
+          ])
+            .then((responses: AxiosResponse[]) => {
+              responses.forEach((res) => {
+                setUser({
+                  ...userModel,
+                  image: res.data.data.image,
+                });
+                setLoadingUserToken(false);
               });
-              setLoadingUserToken(false);
             })
             .catch(() => {
               setLoadingUserToken(false);
@@ -103,6 +112,16 @@ const Login:FunctionComponent<IPropsNavigation> = ({
   if (loadingUserToken) {
     return (
       <View flex right paddingR-20>
+        <Toast
+          visible={!!notificationMessage}
+          position="bottom"
+          showDismiss
+          onDismiss={() => setNotificationMessage('')}
+          backgroundColor="black"
+          autoDismiss={3000}
+          message={notificationMessage}
+        />
+
         <LoaderScreen message="Loading..." overlay />
       </View>
     );

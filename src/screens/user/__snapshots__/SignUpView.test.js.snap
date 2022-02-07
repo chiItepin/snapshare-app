@@ -443,6 +443,7 @@ exports[`SignUpView renders and handles events 1`] = `
                   ],
                 ]
               }
+              testID="undefined.charCounter"
             >
               6/20
             </Text>
@@ -629,6 +630,7 @@ exports[`SignUpView renders and handles events 1`] = `
                   ],
                 ]
               }
+              testID="undefined.charCounter"
             >
               6/20
             </Text>
