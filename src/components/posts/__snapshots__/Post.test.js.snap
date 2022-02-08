@@ -221,7 +221,7 @@ exports[`PostComponent renders and handles events 1`] = `
         },
         Object {
           "grey50": true,
-          "text": "Sep 12th 21",
+          "text": "Nov 13th 22",
           "text90": true,
         },
       ]
@@ -331,7 +331,7 @@ exports[`PostComponent renders and handles events 1`] = `
         testID="undefined.text.1"
         text90={true}
       >
-        Sep 12th 21
+        Nov 13th 22
       </Text>
     </View>
   </View>

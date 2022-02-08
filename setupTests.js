@@ -13,6 +13,13 @@ jest.mock('expo-image-picker', () => ({
   },
 }));
 
+jest.mock('moment', () => ({
+  __esModule: true,
+  default: () => ({
+    format: () => 'Nov 13th 22',
+  }),
+}));
+
 jest.mock('./src/useApi', () => ({
   __esModule: true,
   default: () => ({
