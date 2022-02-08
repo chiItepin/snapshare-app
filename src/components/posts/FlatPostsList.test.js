@@ -24,7 +24,7 @@ test('FlatPostsList renders and handles events', () => {
         email: 'xxx@xxx.com',
         image: '',
       },
-      createdAt: '2021-09-13T06:54:27.440+00:00',
+      createdAt: '2021-09-13T00:00:00.440+00:00',
     }],
     renderHeader: () => null,
     renderFooter: () => null,

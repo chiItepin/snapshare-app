@@ -27,7 +27,7 @@ exports[`FlatPostsList renders and handles events 1`] = `
         },
         "comments": Array [],
         "content": "lorem ipsum",
-        "createdAt": "2021-09-13T06:54:27.440+00:00",
+        "createdAt": "2021-09-13T00:00:00.440+00:00",
         "images": Array [],
         "likes": Array [],
       },
