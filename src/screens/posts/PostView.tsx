@@ -1,20 +1,28 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { AxiosResponse } from 'axios';
+import moment from 'moment';
 import { NavigationProp } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 import {
   Share,
+  FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import {
   Toast,
   LoaderScreen,
   View,
+  Text,
+  Incubator,
 } from 'react-native-ui-lib';
 import Post from '../../components/posts/Post';
 import RootScreenParams from '../../screens/RootScreenParams';
 import styles from '../../styles/GlobalStyles';
-import IPost from '../../screens/templates/post';
+import helperStyles from '../../styles/HelperStyles';
+import IPost, { IComment } from '../../screens/templates/post';
 import useApi from '../../useApi';
+
+const { TextField } = Incubator;
 
 interface IParams {
   postId: string;
@@ -26,6 +34,114 @@ interface IProps {
   };
   navigation: NavigationProp<RootScreenParams>;
 }
+
+interface ICommentProps {
+  comment: IComment;
+  navigation: NavigationProp<RootScreenParams>;
+}
+
+interface IRenderPostProps {
+  item: IPost;
+  navigation: NavigationProp<RootScreenParams>;
+  handlePostLike: (postId: string) => void;
+  handlePostShare: (postId: string) => void;
+  handleCreateComment: (content: string) => void;
+}
+
+const renderPost: FunctionComponent<IRenderPostProps> = ({
+  item,
+  navigation,
+  handlePostLike,
+  handlePostShare,
+  handleCreateComment,
+}: IRenderPostProps) => {
+  const [commentField, setCommentField] = useState('');
+
+  return (
+    <View key={item._id} style={styles.card}>
+      <Post
+        item={item}
+        handlePostLike={handlePostLike}
+        handlePostShare={handlePostShare}
+        navigation={navigation}
+        hasRedirectToPostView={false}
+      />
+
+      <View style={helperStyles.marginVerticalMed}>
+        <TextField
+          placeholder="Enter your comment"
+          value={commentField}
+          onChangeText={setCommentField}
+          maxLength={100}
+          showCharCounter
+          fieldStyle={styles.genericField}
+          onSubmitEditing={() => {
+            handleCreateComment(commentField);
+            setCommentField('');
+          }}
+        />
+      </View>
+    </View>
+  );
+};
+
+const arePropsEqual = (prevProps: IRenderPostProps, nextProps: IRenderPostProps) => (
+  prevProps.item._id === nextProps.item._id
+  && prevProps.item.content === nextProps.item.content
+  && prevProps.item.comments.length === nextProps.item.comments.length
+  && prevProps.item.likes.length === nextProps.item.likes.length
+);
+
+const MemoizedRenderPost = React.memo(renderPost, arePropsEqual);
+
+const renderCommentRow: FunctionComponent<ICommentProps> = ({
+  comment,
+  navigation,
+}: ICommentProps) => (
+  <>
+    <View style={helperStyles['w-25']}>
+      <View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ProfileView', {
+            userId: comment?.authorId._id || '',
+          })}
+        >
+          <Text
+            numberOfLines={1}
+            text90
+            link
+          >
+            {comment?.authorId?.email}
+          </Text>
+        </TouchableOpacity>
+        <Text
+          numberOfLines={1}
+          grey40
+          text90
+          link
+        >
+          {moment(comment.createdAt).format('MMM Do YY')}
+        </Text>
+      </View>
+    </View>
+
+    <View style={helperStyles['w-75']}>
+      <Text
+        text90
+        grey30
+      >
+        {comment?.content}
+      </Text>
+    </View>
+  </>
+);
+
+const areCommentPropsEqual = (prevProps: ICommentProps, nextProps: ICommentProps) => (
+  prevProps.comment._id === nextProps.comment._id
+  && prevProps.comment.content === nextProps.comment.content
+);
+
+const MemoizedRenderComment = React.memo(renderCommentRow, areCommentPropsEqual);
 
 const PostView: FunctionComponent<IProps> = ({
   route,
@@ -58,6 +174,20 @@ const PostView: FunctionComponent<IProps> = ({
       });
   };
 
+  const handleCreateComment = (content: string): void => {
+    if (content && content.trim()) {
+      setNotificationMessage('Sending your comment...');
+      fetchPosts.createPostComment(postId, content.trim())
+        .then((res: AxiosResponse) => {
+          setPost(res.data.data);
+          setNotificationMessage('');
+        })
+        .catch(() => {
+          setNotificationMessage('Unknown error');
+        });
+    }
+  };
+
   const handlePostShare = (id: string): void => {
     const redirectUrl = Linking.createURL('PostView', {
       queryParams: { postId: id },
@@ -70,16 +200,20 @@ const PostView: FunctionComponent<IProps> = ({
       });
   };
 
+  const handleGetPost = React.useCallback(() => {
+    fetchPosts.getPost(postId)
+      .then((res: AxiosResponse) => {
+        setPost(res.data.data);
+        setLoaded(true);
+      })
+      .catch(() => {
+        setNotificationMessage('Post not found');
+      });
+  }, [postId, apiLoaded]);
+
   useEffect(() => {
     if (postId && apiLoaded) {
-      fetchPosts.getPost(postId)
-        .then((res: AxiosResponse) => {
-          setPost(res.data.data);
-          setLoaded(true);
-        })
-        .catch(() => {
-          setNotificationMessage('Post not found');
-        });
+      handleGetPost();
     }
   }, [postId, apiLoaded]);
 
@@ -101,7 +235,7 @@ const PostView: FunctionComponent<IProps> = ({
   }
 
   return (
-    <View style={styles.container}>
+    <>
       <Toast
         visible={!!notificationMessage}
         position="bottom"
@@ -111,16 +245,40 @@ const PostView: FunctionComponent<IProps> = ({
         autoDismiss={3000}
         message={notificationMessage}
       />
-      <View key={post._id} style={[styles.card]}>
-        <Post
-          item={post}
-          handlePostLike={handlePostLike}
-          handlePostShare={handlePostShare}
-          navigation={navigation}
-          hasRedirectToPostView={false}
-        />
-      </View>
-    </View>
+
+      <FlatList
+        data={post.comments}
+        onRefresh={() => handleGetPost()}
+        refreshing={!loaded}
+        style={helperStyles.paddingHorizontalMed}
+        renderItem={({ item }) => (
+          <View style={[
+            helperStyles.row,
+            helperStyles.borderBottom,
+            helperStyles.marginBottomMed,
+            helperStyles.paddingHorizontalMed,
+          ]}
+          >
+            <MemoizedRenderComment
+              comment={item}
+              navigation={navigation}
+            />
+          </View>
+        )}
+        ListHeaderComponent={() => (
+          <MemoizedRenderPost
+            handlePostLike={handlePostLike}
+            handlePostShare={handlePostShare}
+            item={post}
+            navigation={navigation}
+            handleCreateComment={handleCreateComment}
+          />
+        )}
+        ListFooterComponent={null}
+        keyExtractor={(item) => item._id}
+        ListEmptyComponent={loaded ? <Text grey40 text90 style={{ textAlign: 'center' }}>Comments box is empty</Text> : null}
+      />
+    </>
   );
 };
 

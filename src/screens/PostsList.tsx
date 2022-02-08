@@ -26,6 +26,11 @@ interface IProps {
   navigation: any;
 }
 
+interface IImage {
+  index: number;
+  url: string;
+}
+
 const PostsList: FunctionComponent<IProps> = ({
   navigation,
   clearUser,
@@ -34,6 +39,7 @@ const PostsList: FunctionComponent<IProps> = ({
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [newContent, setNewContent] = useState('');
+  const [images, setImages] = useState<IImage[]>([]);
   const [isNewPostTextFieldVisible, setIsNewPostTextFieldVisible] = useState(false);
   const [nextPage, setNextPage] = useState(1);
   const [notificationMessage, setNotificationMessage] = useState('');
@@ -72,11 +78,13 @@ const PostsList: FunctionComponent<IProps> = ({
   const handleSubmitPost = (): void => {
     setIsNewPostTextFieldVisible(false);
     setNotificationMessage('Uploading...');
-    fetchPosts.createPost(newContent).then((res) => {
+    const newImages = images.map((image) => ({ url: image.url }));
+    fetchPosts.createPost(newContent, newImages).then((res) => {
       const updatedPosts = [...posts];
       updatedPosts.unshift(res.data.data);
       setPosts(updatedPosts);
       setNewContent('');
+      setImages([]);
       setNotificationMessage('');
     }).catch(() => {
       setNotificationMessage('Unknown error');
@@ -98,6 +106,9 @@ const PostsList: FunctionComponent<IProps> = ({
             value={newContent}
             onChange={setNewContent}
             onSubmit={handleSubmitPost}
+            setNotificationMessage={setNotificationMessage}
+            setImages={setImages}
+            images={images}
           />
         )}
         expandable

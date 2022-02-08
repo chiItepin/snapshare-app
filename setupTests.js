@@ -5,6 +5,21 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
   }),
 }));
 
+jest.mock('expo-image-picker', () => ({
+  __esModule: true,
+  launchImageLibraryAsync: () => ({}),
+  MediaTypeOptions: {
+    Images: {},
+  },
+}));
+
+jest.mock('moment', () => ({
+  __esModule: true,
+  default: () => ({
+    format: () => 'Nov 13th 22',
+  }),
+}));
+
 jest.mock('./src/useApi', () => ({
   __esModule: true,
   default: () => ({

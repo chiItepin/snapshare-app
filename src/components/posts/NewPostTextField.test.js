@@ -10,6 +10,9 @@ test('NewPostTextField renders and handles events', () => {
     onSubmit: mockFn,
     setIsNewPostTextFieldVisible: mockFn,
     onChange: mockFn,
+    setNotificationMessage: mockFn,
+    setImages: mockFn,
+    images: [],
   };
 
   const component = render(

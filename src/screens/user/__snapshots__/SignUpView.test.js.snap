@@ -41,7 +41,7 @@ exports[`SignUpView renders and handles events 1`] = `
             Object {
               "flex": 1,
               "paddingHorizontal": 5,
-              "paddingVertical": 12,
+              "paddingVertical": 10,
               "width": "100%",
             },
           ]
@@ -131,6 +131,7 @@ exports[`SignUpView renders and handles events 1`] = `
                     Object {
                       "borderBottomWidth": 1,
                       "borderColor": "lightgrey",
+                      "maxHeight": 200,
                       "paddingBottom": 10,
                     },
                     undefined,
@@ -330,6 +331,7 @@ exports[`SignUpView renders and handles events 1`] = `
                     Object {
                       "borderBottomWidth": 1,
                       "borderColor": "lightgrey",
+                      "maxHeight": 200,
                       "paddingBottom": 10,
                     },
                     undefined,
@@ -441,6 +443,7 @@ exports[`SignUpView renders and handles events 1`] = `
                   ],
                 ]
               }
+              testID="undefined.charCounter"
             >
               6/20
             </Text>
@@ -515,6 +518,7 @@ exports[`SignUpView renders and handles events 1`] = `
                     Object {
                       "borderBottomWidth": 1,
                       "borderColor": "lightgrey",
+                      "maxHeight": 200,
                       "paddingBottom": 10,
                     },
                     undefined,
@@ -626,6 +630,7 @@ exports[`SignUpView renders and handles events 1`] = `
                   ],
                 ]
               }
+              testID="undefined.charCounter"
             >
               6/20
             </Text>

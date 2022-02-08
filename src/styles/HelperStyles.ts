@@ -43,7 +43,7 @@ const HelperStyles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.22,
+    shadowOpacity: 0.8,
     shadowRadius: 2.22,
     elevation: 2,
   },
@@ -71,6 +71,9 @@ const HelperStyles = StyleSheet.create({
   paddingBottomMed: {
     paddingBottom: 12,
   },
+  paddingBottomSmall: {
+    paddingBottom: 5,
+  },
   marginTopBig: {
     marginTop: 25,
   },
@@ -92,8 +95,16 @@ const HelperStyles = StyleSheet.create({
   marginHorizontalMed: {
     marginHorizontal: 12,
   },
+  marginHorizontalSmall: {
+    marginHorizontal: 5,
+  },
   bgWhite: {
     backgroundColor: 'white',
+  },
+  borderBottom: {
+    borderBottomWidth: 1,
+    borderColor: 'rgb(240, 240, 240)',
+    paddingBottom: 5,
   },
 });
 

@@ -89,7 +89,7 @@ const FlatPostsList: FunctionComponent<IProps> = ({
     keyExtractor={(item) => item._id}
     onScroll={onScroll
       ? (event: NativeSyntheticEvent<NativeScrollEvent>) => onScroll(event) : undefined}
-    ListEmptyComponent={loaded ? <Text style={{ textAlign: 'center' }}>No records found</Text> : null}
+    ListEmptyComponent={loaded ? <Text grey40 text90 style={{ textAlign: 'center' }}>No records found</Text> : null}
   />
 );
 
