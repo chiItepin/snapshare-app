@@ -27,7 +27,7 @@ exports[`FlatPostsList renders and handles events 1`] = `
         },
         "comments": Array [],
         "content": "lorem ipsum",
-        "createdAt": "2021-09-13T00:00:00.440+00:00",
+        "createdAt": "2021-09-13T18:00:00.440+00:00",
         "images": Array [],
         "likes": Array [],
       },
@@ -305,7 +305,7 @@ exports[`FlatPostsList renders and handles events 1`] = `
                 },
                 Object {
                   "grey50": true,
-                  "text": "Sep 12th 21",
+                  "text": "Sep 13th 21",
                   "text90": true,
                 },
               ]
@@ -415,7 +415,7 @@ exports[`FlatPostsList renders and handles events 1`] = `
                 testID="undefined.text.1"
                 text90={true}
               >
-                Sep 12th 21
+                Sep 13th 21
               </Text>
             </View>
           </View>
