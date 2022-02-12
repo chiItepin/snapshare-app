@@ -78,9 +78,12 @@ exports[`FlatPostsList renders and handles events 1`] = `
       <View
         style={
           Object {
-            "flex": 1,
-            "paddingHorizontal": 5,
-            "paddingVertical": 10,
+            "backgroundColor": "rgb(240, 241, 244)",
+            "borderRadius": 25,
+            "marginBottom": 15,
+            "marginTop": 5,
+            "paddingHorizontal": 15,
+            "paddingVertical": 15,
             "width": "100%",
           }
         }
@@ -104,12 +107,12 @@ exports[`FlatPostsList renders and handles events 1`] = `
           style={
             Object {
               "backgroundColor": "#FFFFFF",
-              "borderRadius": 12,
+              "borderRadius": 25,
               "elevation": 2,
               "height": undefined,
               "marginBottom": 5,
               "opacity": 1,
-              "overflow": "visible",
+              "overflow": "hidden",
               "shadowColor": "#A6ACB1",
               "shadowOffset": Object {
                 "height": 5,
@@ -509,14 +512,14 @@ exports[`FlatPostsList renders and handles events 1`] = `
                             "lineHeight": 24,
                           },
                           Object {
-                            "color": "#6E7881",
+                            "color": "#4D5963",
                           },
                           Object {},
                           Object {
                             "fontFamily": "System",
-                            "fontSize": 12,
-                            "fontWeight": "700",
-                            "lineHeight": 16,
+                            "fontSize": 14,
+                            "fontWeight": "400",
+                            "lineHeight": 20,
                           },
                           undefined,
                         ],
@@ -530,7 +533,7 @@ exports[`FlatPostsList renders and handles events 1`] = `
               </View>
               <View>
                 <Text
-                  grey40={true}
+                  grey20={true}
                   link={true}
                   style={
                     Array [
@@ -540,12 +543,12 @@ exports[`FlatPostsList renders and handles events 1`] = `
                       },
                       Object {
                         "fontFamily": "System",
-                        "fontSize": 12,
-                        "fontWeight": "700",
-                        "lineHeight": 16,
+                        "fontSize": 14,
+                        "fontWeight": "400",
+                        "lineHeight": 20,
                       },
                       Object {
-                        "color": "#A6ACB1",
+                        "color": "#4D5963",
                       },
                       undefined,
                       undefined,
@@ -558,7 +561,7 @@ exports[`FlatPostsList renders and handles events 1`] = `
                       },
                     ]
                   }
-                  text90={true}
+                  text80={true}
                 >
                   Comments 0
                 </Text>
@@ -618,14 +621,14 @@ exports[`FlatPostsList renders and handles events 1`] = `
                             "lineHeight": 24,
                           },
                           Object {
-                            "color": "#A6ACB1",
+                            "color": "#4D5963",
                           },
                           Object {},
                           Object {
                             "fontFamily": "System",
-                            "fontSize": 12,
-                            "fontWeight": "700",
-                            "lineHeight": 16,
+                            "fontSize": 14,
+                            "fontWeight": "400",
+                            "lineHeight": 20,
                           },
                           undefined,
                         ],
