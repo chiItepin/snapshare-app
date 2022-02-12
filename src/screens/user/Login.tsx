@@ -165,7 +165,7 @@ const Login:FunctionComponent<IProps> = ({
 
           <Button
             onPress={handleLogin}
-            label="Submit"
+            label="Login"
             disabled={!password || !email || loading}
             enableShadow
             borderRadius={6}

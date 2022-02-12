@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import {
   Share,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -26,6 +27,7 @@ import helperStyles from '../../styles/HelperStyles';
 import useApi from '../../useApi';
 import RootScreenParams from '../RootScreenParams';
 import { IState } from '../../reducer';
+import handleAxiosErrorMessage from '../../utilities/helpers';
 
 interface IParams {
   userId: string;
@@ -55,6 +57,7 @@ const ProfileView: FunctionComponent<IProps> = ({
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [initialLoaded, setInitialLoaded] = useState(false);
+  const [selectedUserFollowersCount, setSelectedUserFollowersCount] = useState(0);
   const { userId: selectedUserId } = route.params;
   const {
     User,
@@ -78,7 +81,15 @@ const ProfileView: FunctionComponent<IProps> = ({
       .then((responses) => {
         responses.forEach((res, index) => {
           if (index === 1) {
+            // update the loggedin user followers
             setFollowers(res.data.data.docs);
+
+            // update the selected user followers
+            if (isUserFollowed()) {
+              setSelectedUserFollowersCount((count) => count - 1);
+            } else {
+              setSelectedUserFollowersCount((count) => count + 1);
+            }
           }
         });
         setNotificationMessage('');
@@ -148,15 +159,26 @@ const ProfileView: FunctionComponent<IProps> = ({
 
   useEffect(() => {
     if (selectedUserId && apiLoaded) {
-      User.getUser(selectedUserId)
-        .then((res) => {
+      navigation.setOptions({ title: '', headerTintColor: 'rgb(88, 72, 255)' });
+
+      Promise.all([
+        User.getUser(selectedUserId),
+        fetchFollowers.getFollowers(selectedUserId, 1),
+      ])
+        .then((responses) => {
+          responses.forEach((res, index) => {
+            if (index === 0) {
+              const requestedUser = res.data.data as IUser;
+              setSelectedUser(requestedUser);
+            } else {
+              setSelectedUserFollowersCount(res.data.data.totalDocs);
+            }
+          });
           setLoading(false);
-          const requestedUser = res.data.data as IUser;
-          setSelectedUser(requestedUser);
-          navigation.setOptions({ title: '', headerTintColor: 'rgb(88, 72, 255)' });
         })
-        .catch(() => {
-          setNotificationMessage('Error retrieving user');
+        .catch((err) => {
+          const errorMsg = handleAxiosErrorMessage(err);
+          setNotificationMessage(errorMsg);
         });
     }
   }, [selectedUserId, apiLoaded]);
@@ -169,7 +191,7 @@ const ProfileView: FunctionComponent<IProps> = ({
   }, [apiLoaded]);
 
   const renderHeader = React.useCallback(() => (
-    <Card style={{ marginBottom: 10 }}>
+    <Card style={{ marginBottom: 10, alignItems: 'center' }}>
       <View style={styles.accountAvatarContainer}>
         <Avatar
           source={selectedUser?.image ? { uri: `data:image/jpeg;base64,${selectedUser.image}` } : undefined}
@@ -182,10 +204,17 @@ const ProfileView: FunctionComponent<IProps> = ({
       <Card.Section
         bg-white
         content={[
-          { text: selectedUser?.email || '', text70: true, grey10: true },
-          { text: selectedUser?.createdAt ? `Since: ${selectedUser?.createdAt}` : '', text90: true, grey50: true },
+          {
+            text: selectedUser?.email || '', text70: true, grey10: true, style: { textAlign: 'center' },
+          },
+          {
+            text: selectedUser?.createdAt ? `Since: ${selectedUser?.createdAt}` : '', text90: true, grey50: true, style: { textAlign: 'center' },
+          },
+          {
+            text: `${selectedUserFollowersCount.toString()} followers`, text90: true, grey50: true, style: { textAlign: 'center' },
+          },
         ]}
-        style={{ padding: 20 }}
+        style={{ padding: 10 }}
       />
 
       {user._id !== selectedUserId && (
@@ -202,10 +231,10 @@ const ProfileView: FunctionComponent<IProps> = ({
         </View>
       )}
     </Card>
-  ), [selectedUser, followers]);
+  ), [selectedUser, followers, selectedUserFollowersCount]);
 
   const renderFooter = React.useCallback(() => (
-    <View style={[helperStyles.marginBottomBig]}>
+    <View style={(Platform.OS === 'android') ? { marginBottom: 45 } : [helperStyles.marginBottomBig]}>
       {(nextPage !== 1 && nextPage !== null) && (
         <Button
           onPress={() => handleGetUserPosts(true, nextPage)}
@@ -239,6 +268,7 @@ const ProfileView: FunctionComponent<IProps> = ({
   return (
     <SafeAreaView style={[styles.containerNoPadding]}>
       <View style={[styles.profileHeader]} />
+      {(Platform.OS === 'android') && <View style={[styles.profileHeaderBack]} />}
 
       <Toast
         visible={!!notificationMessage}

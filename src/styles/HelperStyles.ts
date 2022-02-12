@@ -3,6 +3,9 @@ import {
 } from 'react-native';
 
 const HelperStyles = StyleSheet.create({
+  flex1: {
+    flex: 1,
+  },
   row: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -59,6 +62,9 @@ const HelperStyles = StyleSheet.create({
   paddingHorizontalMed: {
     paddingHorizontal: 12,
   },
+  paddingHorizontalSmall: {
+    paddingHorizontal: 15,
+  },
   paddingLeftMed: {
     paddingLeft: 12,
   },
@@ -67,6 +73,9 @@ const HelperStyles = StyleSheet.create({
   },
   paddingVerticalTopMed: {
     paddingTop: 12,
+  },
+  paddingVerticalMed: {
+    paddingVertical: 12,
   },
   paddingBottomMed: {
     paddingBottom: 12,
@@ -98,6 +107,9 @@ const HelperStyles = StyleSheet.create({
   marginHorizontalSmall: {
     marginHorizontal: 5,
   },
+  marginSmall: {
+    marginHorizontal: 5,
+  },
   bgWhite: {
     backgroundColor: 'white',
   },
@@ -105,6 +117,9 @@ const HelperStyles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'rgb(240, 240, 240)',
     paddingBottom: 5,
+  },
+  postAvatar: {
+    borderRadius: 8,
   },
 });
 

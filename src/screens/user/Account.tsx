@@ -10,6 +10,7 @@ import {
   Avatar,
   Colors,
 } from 'react-native-ui-lib';
+import { NavigationProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -18,18 +19,22 @@ import IUser from '../templates/user';
 import styles from '../../styles/GlobalStyles';
 import { IState } from '../../reducer';
 import useApi from '../../useApi';
+import HelperStyles from '../../styles/HelperStyles';
+import RootScreenParams from '../RootScreenParams';
 
 type userPropertiesType = 'image'|'loggedInDate'|'token';
 interface IProps {
   clearUser: () => void;
   changeUser: (user: IUser, property: userPropertiesType, value: any) => void;
   user: IUser;
+  navigation: NavigationProp<RootScreenParams>;
 }
 
 const Login:FunctionComponent<IProps> = ({
   clearUser,
   user,
   changeUser,
+  navigation,
 }: IProps) => {
   const [notificationMessage, setNotificationMessage] = useState('');
   const { User } = useApi();
@@ -76,7 +81,7 @@ const Login:FunctionComponent<IProps> = ({
         />
 
         <View style={styles.card}>
-          <Card style={{ marginBottom: 10 }}>
+          <Card style={{ marginBottom: 10, alignItems: 'center' }}>
             <View style={styles.accountAvatarContainer}>
               <Avatar
                 source={user?.image ? { uri: `data:image/jpeg;base64,${user.image}` } : undefined}
@@ -95,6 +100,18 @@ const Login:FunctionComponent<IProps> = ({
               ]}
               style={{ padding: 20 }}
             />
+
+            <View style={[HelperStyles.paddingHorizontalBig, HelperStyles.paddingBottomMed]}>
+              <Button
+                onPress={() => navigation.navigate('ProfileView', {
+                  userId: user._id || '',
+                })}
+                label="View profile"
+                enableShadow
+                outline
+                borderRadius={6}
+              />
+            </View>
           </Card>
 
           <Button

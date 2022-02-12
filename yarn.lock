@@ -5527,6 +5527,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-barcode-scanner@npm:~11.2.0":
+  version: 11.2.1
+  resolution: "expo-barcode-scanner@npm:11.2.1"
+  dependencies:
+    "@expo/config-plugins": ^4.0.2
+    expo-image-loader: ~3.1.0
+  peerDependencies:
+    expo: "*"
+  checksum: 2720efb531ba77da23a7214d6bb9b25d88b493bb992eaaf93ab6e5055af49507ba47bf2c55302c67911a91d77ff25582cb7c3352c90188478753f1827bb03d5a
+  languageName: node
+  linkType: hard
+
+"expo-clipboard@npm:~2.1.0":
+  version: 2.1.1
+  resolution: "expo-clipboard@npm:2.1.1"
+  peerDependencies:
+    expo: "*"
+  checksum: 58a94296e8317db34fcd069c80f5ddbae6e3d46f1daed239a7ac7d56d65eec5e73dfadd4fc7d497a26a2a8f64646940a8222653d0d2f7f21d2baa22ca3208888
+  languageName: node
+  linkType: hard
+
 "expo-constants@npm:~13.0.0, expo-constants@npm:~13.0.2":
   version: 13.0.2
   resolution: "expo-constants@npm:13.0.2"
@@ -5568,6 +5589,15 @@ __metadata:
   peerDependencies:
     expo: "*"
   checksum: 77086d4a042bb804a06d8918408e79e4d8f9dd9f91ccb894820239697c663eeafd9f2b6119f6393c502d763aed3ae089e403a7d365e8d65ee7b6522697b4a79c
+  languageName: node
+  linkType: hard
+
+"expo-image-loader@npm:~3.1.0":
+  version: 3.1.1
+  resolution: "expo-image-loader@npm:3.1.1"
+  peerDependencies:
+    expo: "*"
+  checksum: 9b936ce109fe431468f1fa559b289e8999fd7ffdae0538ba56c90e9aacd9f299b6fae0c4cf70634b9086a0ae68b90beaf2e9b0fad1d299f6a9f333130186d663
   languageName: node
   linkType: hard
 
@@ -10811,6 +10841,8 @@ __metadata:
     eslint-plugin-jsx-a11y: ^6.4.1
     eslint-plugin-react: ^7.24.0
     expo: ^44.0.0
+    expo-barcode-scanner: ~11.2.0
+    expo-clipboard: ~2.1.0
     expo-image-picker: ^12.0.2
     expo-linking: ^3.0.0
     expo-status-bar: ^1.2.0

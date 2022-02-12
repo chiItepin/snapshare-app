@@ -13,6 +13,11 @@ export interface IImage {
   url: string;
 }
 
+export interface ILike {
+  _id?: string;
+  authorId: string;
+}
+
 interface IPost {
   _id: string;
   tags: string[];
@@ -21,7 +26,7 @@ interface IPost {
   authorId: IUser;
   images: IImage[];
   comments: IComment[];
-  likes: [];
+  likes: ILike[];
   createdAt?: string;
   updatedAt?: string;
 }

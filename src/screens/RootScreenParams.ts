@@ -13,6 +13,9 @@ interface RootScreenParams {
   AccountStack: undefined;
   SignUpView: undefined;
   ProfileView: IProfileViewParams;
+  NotificationsStack: undefined;
+  BarcodeScannerView: undefined;
+  BarcodeScannerStack: undefined;
 }
 
 export default RootScreenParams;

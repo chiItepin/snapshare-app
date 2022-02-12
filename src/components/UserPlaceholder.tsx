@@ -11,23 +11,33 @@ type TSetFollowers = (followers: IFollower[]) => void;
 interface IProps {
   user: IUser;
   setFollowers: TSetFollowers;
+  setUnseenNotificationsCount: (count: number) => void;
 }
 
 const UserPlaceholder:FunctionComponent<IProps> = ({
   user,
   setFollowers,
+  setUnseenNotificationsCount,
 }: IProps) => {
   const {
     apiLoaded,
     fetchFollowers,
+    User,
   } = useApi();
 
   useEffect(() => {
-    if (apiLoaded && user._id) {
-      fetchFollowers.getFollowers(user._id || '', 1)
-        .then((res) => {
-          setFollowers(res.data.data.docs);
-        });
+    if (apiLoaded) {
+      if (user._id) {
+        fetchFollowers.getFollowers(user._id || '', 1)
+          .then((res) => {
+            setFollowers(res.data.data.docs);
+          });
+
+        User.getUserUnSeenNotifications(1)
+          .then((res) => {
+            setUnseenNotificationsCount(res.data.data.totalDocs);
+          });
+      }
     }
   }, [apiLoaded, user]);
 
@@ -42,6 +52,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setFollowers: (followers: IFollower[]) => dispatch({
     type: 'SET_FOLLOWERS',
     payload: followers,
+  }),
+  setUnseenNotificationsCount: (count: number) => dispatch({
+    type: 'SET_UNSEEN_NOTIFICATIONS_COUNT',
+    payload: count,
   }),
 });
 

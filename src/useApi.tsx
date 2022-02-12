@@ -21,6 +21,9 @@ interface IRequestUser {
   getUserPosts: (id: string, page: number) => Promise<AxiosResponse<any>>;
   createUser: (email: string, password: string, confirmPassword: string)
   => Promise<AxiosResponse<any>>;
+  getUserNotifications: (page: number) => Promise<AxiosResponse<any>>;
+  getUserUnSeenNotifications: (page: number) => Promise<AxiosResponse<any>>;
+  updateNotificationsSeenStatus: (status: boolean) => Promise<AxiosResponse<any>>;
 }
 
 interface IRequestFollower {
@@ -72,6 +75,17 @@ const useApi = (): IApi => {
     }),
     updateImage: (id: string, image: string): Promise<AxiosResponse<any>> => axios.patch(`${baseUrl}/api/users/${id}`, {
       image,
+    }, {
+      headers,
+    }),
+    getUserNotifications: (page: number): Promise<AxiosResponse<any>> => axios.get(`${baseUrl}/api/notifications?page=${page}`, {
+      headers,
+    }),
+    getUserUnSeenNotifications: (page: number): Promise<AxiosResponse<any>> => axios.get(`${baseUrl}/api/notifications/unseen?page=${page}`, {
+      headers,
+    }),
+    updateNotificationsSeenStatus: (status: boolean): Promise<AxiosResponse<any>> => axios.patch(`${baseUrl}/api/notifications/status`, {
+      status,
     }, {
       headers,
     }),

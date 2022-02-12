@@ -9,6 +9,7 @@ export interface IState {
   user: IUser;
   posts: any[];
   followers: IFollower[];
+  unSeenNotificationsCount: number;
 }
 
 export interface IActions {
@@ -26,6 +27,7 @@ const initialState: IState = {
   },
   posts: [],
   followers: [],
+  unSeenNotificationsCount: 0,
 };
 
 const Reducer = (state: IState = initialState, action: IActions): IState => {
@@ -39,6 +41,11 @@ const Reducer = (state: IState = initialState, action: IActions): IState => {
       return {
         ...state,
         followers: action.payload,
+      };
+    case 'SET_UNSEEN_NOTIFICATIONS_COUNT':
+      return {
+        ...state,
+        unSeenNotificationsCount: action.payload,
       };
     default:
       return state;

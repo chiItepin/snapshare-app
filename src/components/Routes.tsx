@@ -5,8 +5,9 @@ import {
 } from 'react-native';
 import {
   Chip,
-  Colors,
   View,
+  Badge,
+  Colors,
 } from 'react-native-ui-lib';
 import * as Linking from 'expo-linking';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -22,7 +23,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import { HeaderBackButton, HeaderBackButtonProps } from '@react-navigation/elements';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RootScreenParams from '../screens/RootScreenParams';
@@ -34,6 +35,8 @@ import Account from '../screens/user/Account';
 import SignUpView from '../screens/user/SignUpView';
 import PostView from '../screens/posts/PostView';
 import ProfileView from '../screens/user/ProfileView';
+import NotificationsList from '../screens/user/NotificationsList';
+import BarcodeScannerView from '../screens/BarcodeScannerView';
 import IUser from '../screens/templates/user';
 
 const Stack = createStackNavigator();
@@ -64,23 +67,38 @@ const stackOptions = (navigation: IDrawerNavigationProps): object => ({
 
 const NavigationDrawerStructure: FunctionComponent<IDrawerNavigationProps> = ({
   toggleDrawer,
-}: IDrawerNavigationProps) => (
-  <View style={{ flexDirection: 'row' }}>
-    <TouchableOpacity onPress={toggleDrawer}>
-      <Image
-        source={{
-          uri:
+}: IDrawerNavigationProps) => {
+  const unSeenNotificationsCount = useSelector((state: IState) => state.unSeenNotificationsCount);
+
+  return (
+    <View style={{ flexDirection: 'row' }}>
+      <TouchableOpacity onPress={toggleDrawer}>
+        <Image
+          source={{
+            uri:
               'https://raw.githubusercontent.com/AboutReact/sampleresource/master/drawerWhite.png',
-        }}
-        style={{ width: 25, height: 25, marginLeft: 15 }}
-      />
-    </TouchableOpacity>
-  </View>
-);
+          }}
+          style={{ width: 25, height: 25, marginLeft: 15 }}
+        />
+      </TouchableOpacity>
+
+      {unSeenNotificationsCount
+        ? (
+          <Badge
+            style={{
+              marginTop: 2,
+            }}
+            size={20}
+            label={unSeenNotificationsCount.toString()}
+            backgroundColor={Colors.orange30}
+          />
+        ) : null}
+    </View>
+  );
+};
 
 const PostsStack: FunctionComponent<IPropsStack> = ({ navigation }: IPropsStack) => (
   <Stack.Navigator
-    initialRouteName="PostsList"
     screenOptions={stackOptions(navigation)}
   >
     <Stack.Screen name="PostsList" component={PostsList} options={{ title: 'Home' }} />
@@ -105,15 +123,36 @@ const AccountStack: FunctionComponent<IPropsStack> = ({ navigation }: IPropsStac
     screenOptions={stackOptions(navigation)}
   >
     <Stack.Screen name="Account" component={Account} options={{ title: 'Account' }} />
+    <Stack.Screen name="ProfileView" component={ProfileView} options={{ title: 'Viewing profile' }} />
+  </Stack.Navigator>
+);
+
+const NotificationsStack: FunctionComponent<IPropsStack> = ({ navigation }: IPropsStack) => (
+  <Stack.Navigator
+    initialRouteName="Account"
+    screenOptions={stackOptions(navigation)}
+  >
+    <Stack.Screen name="Notifications" component={NotificationsList} options={{ title: 'Notifications' }} />
+  </Stack.Navigator>
+);
+
+const BarcodeScannerStack: FunctionComponent<IPropsStack> = ({ navigation }: IPropsStack) => (
+  <Stack.Navigator
+    initialRouteName="BarcodeScannerView"
+    screenOptions={stackOptions(navigation)}
+  >
+    <Stack.Screen name="BarcodeScannerView" component={BarcodeScannerView} options={{ title: 'QR Scanner' }} />
   </Stack.Navigator>
 );
 
 interface IPropsMainNavigation {
   user: IUser;
+  unSeenNotificationsCount: number;
 }
 
 const mapStateToProps = (state: IState) => ({
   user: state.user,
+  unSeenNotificationsCount: state.unSeenNotificationsCount,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -156,9 +195,9 @@ const DrawerList: FunctionComponent<DrawerListProps> = (props: DrawerListProps) 
               }}
               iconStyle={drawerStyles.drawerAccountChipImage}
               label={user?.email}
-              labelStyle={{ color: Colors.blue40 }}
+              labelStyle={{ color: Colors.violet30 }}
               containerStyle={
-                { borderColor: Colors.blue80, backgroundColor: Colors.blue80 }
+                { borderColor: Colors.violet70, backgroundColor: Colors.violet70 }
               }
               onPress={() => props.navigation.navigate('AccountStack')}
             />
@@ -172,6 +211,7 @@ const DrawerList: FunctionComponent<DrawerListProps> = (props: DrawerListProps) 
         <View>
           <DrawerItem
             label="Logout"
+            labelStyle={{ color: 'black' }}
             onPress={async () => {
               await AsyncStorage.removeItem('@user');
               clearUser();
@@ -188,6 +228,7 @@ export const DrawerListConnected = connect(mapStateToProps, mapDispatchToProps)(
 
 const NavigationDrawer: FunctionComponent<IPropsMainNavigation> = ({
   user,
+  unSeenNotificationsCount,
 }: IPropsMainNavigation) => {
   const navigation = useNavigation<NavigationProp<RootScreenParams>>();
 
@@ -216,6 +257,8 @@ const NavigationDrawer: FunctionComponent<IPropsMainNavigation> = ({
       initialRouteName={!user.token ? 'LoginStack' : 'PostsStack'}
       screenOptions={{
         headerShown: false,
+        drawerActiveTintColor: 'rgb(88, 72, 255)',
+        drawerInactiveTintColor: 'black',
       }}
       drawerContent={(props: DrawerContentComponentProps) => (
         <DrawerListConnected {...props} />
@@ -227,6 +270,8 @@ const NavigationDrawer: FunctionComponent<IPropsMainNavigation> = ({
           <>
             <Drawer.Screen name="PostsStack" component={PostsStack} options={{ drawerLabel: 'Posts' }} />
             <Drawer.Screen name="AccountStack" component={AccountStack} options={{ drawerLabel: 'Account' }} />
+            <Drawer.Screen name="NotificationsStack" component={NotificationsStack} options={{ drawerLabel: `Notifications ${unSeenNotificationsCount}` }} />
+            <Drawer.Screen name="BarcodeScannerStack" component={BarcodeScannerStack} options={{ drawerLabel: 'QR Scanner' }} />
           </>
         )}
     </Drawer.Navigator>

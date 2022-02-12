@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, AxiosError } from 'axios';
 import moment from 'moment';
 import { NavigationProp } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
@@ -15,6 +15,7 @@ import {
   Text,
   Incubator,
 } from 'react-native-ui-lib';
+import handleAxiosErrorMessage from '../../utilities/helpers';
 import Post from '../../components/posts/Post';
 import RootScreenParams from '../../screens/RootScreenParams';
 import styles from '../../styles/GlobalStyles';
@@ -169,8 +170,8 @@ const PostView: FunctionComponent<IProps> = ({
         });
         setNotificationMessage('');
       })
-      .catch(() => {
-        setNotificationMessage('Unknown error');
+      .catch((err: AxiosError) => {
+        setNotificationMessage(handleAxiosErrorMessage(err));
       });
   };
 
@@ -182,8 +183,8 @@ const PostView: FunctionComponent<IProps> = ({
           setPost(res.data.data);
           setNotificationMessage('');
         })
-        .catch(() => {
-          setNotificationMessage('Unknown error');
+        .catch((err: AxiosError) => {
+          setNotificationMessage(handleAxiosErrorMessage(err));
         });
     }
   };
@@ -229,6 +230,7 @@ const PostView: FunctionComponent<IProps> = ({
           autoDismiss={3000}
           message={notificationMessage}
         />
+
         <LoaderScreen message="Loading..." overlay />
       </View>
     );

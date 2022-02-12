@@ -27,10 +27,6 @@ interface IProps {
   hasRedirectToPostView?: boolean;
 }
 
-interface IlikeType {
-  _id: string;
-}
-
 const Post: FunctionComponent<IProps> = ({
   item,
   navigation,
@@ -41,15 +37,15 @@ const Post: FunctionComponent<IProps> = ({
   const user = useSelector((state: IState) => state.user);
 
   const hasUserLiked = (): boolean => {
-    const likes = item.likes as IlikeType[];
-    const [like] = likes
-      .filter((l: IlikeType) => l._id === user._id);
+    const [like] = item.likes
+      .filter((l) => l.authorId === user._id);
     return !!like;
   };
 
   return (
     <Card
-      style={styles.cardChild}
+      containerStyle={styles.cardChild}
+      activeOpacity={0.5}
       onPress={hasRedirectToPostView ? () => navigation.navigate('PostView', {
         postId: item._id,
       }) : undefined}
@@ -58,6 +54,7 @@ const Post: FunctionComponent<IProps> = ({
       <View style={styles.postHeaderContainer}>
         <View style={HelperStyles['w-10']}>
           <Avatar
+            imageStyle={HelperStyles.postAvatar}
             onPress={() => navigation.navigate('ProfileView', {
               userId: item?.authorId._id || '',
             })}
@@ -101,9 +98,11 @@ const Post: FunctionComponent<IProps> = ({
           imageSource={{
             uri: `data:image/jpeg;base64,${item.images[0].url}`,
           }}
+          style={HelperStyles.marginHorizontalMed}
           imageStyle={{
             height: 200,
             width: '100%',
+            borderRadius: 25,
             resizeMode: 'cover',
             marginBottom: 10,
           }}
@@ -123,8 +122,8 @@ const Post: FunctionComponent<IProps> = ({
         >
           <View>
             <Button
-              text90
-              color={hasUserLiked() ? Colors.violet30 : Colors.grey30}
+              text80
+              color={hasUserLiked() ? Colors.violet30 : Colors.grey20}
               link
               onPress={() => handlePostLike(item._id)}
               label={`Likes ${item.likes.length}`}
@@ -134,8 +133,8 @@ const Post: FunctionComponent<IProps> = ({
 
           <View>
             <Text
-              text90
-              grey40
+              text80
+              grey20
               link
               style={HelperStyles.paddingRightMed}
             >
@@ -145,8 +144,8 @@ const Post: FunctionComponent<IProps> = ({
 
           <View>
             <Button
-              text90
-              color={Colors.grey40}
+              text80
+              color={Colors.grey20}
               link
               onPress={() => handlePostShare(item._id)}
               label="Share"

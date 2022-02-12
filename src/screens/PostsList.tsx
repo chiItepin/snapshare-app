@@ -13,6 +13,7 @@ import {
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import handleAxiosErrorMessage from '../utilities/helpers';
 import useApi from '../useApi';
 import styles from '../styles/GlobalStyles';
 import HelperStyles from '../styles/HelperStyles';
@@ -143,8 +144,8 @@ const PostsList: FunctionComponent<IProps> = ({
         }));
         setNotificationMessage('');
       })
-      .catch(() => {
-        setNotificationMessage('Unknown error');
+      .catch((err) => {
+        setNotificationMessage(handleAxiosErrorMessage(err));
       });
   };
 

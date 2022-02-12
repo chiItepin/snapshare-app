@@ -20,12 +20,17 @@ const styles = StyleSheet.create({
     padding: 14,
   },
   card: {
-    flex: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 5,
+    backgroundColor: 'rgb(240, 241, 244)',
+    borderRadius: 25,
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    marginTop: 5,
     width: '100%',
   },
   cardChild: {
+    overflow: 'hidden',
+    borderRadius: 25,
     marginBottom: 5,
   },
   accountAvatarContainer: {
@@ -59,7 +64,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   profileHeaderBack: {
-    height: 90,
+    height: 40,
   },
   newPostTextFieldContainer: {
     flexDirection: 'row',
@@ -100,6 +105,29 @@ const styles = StyleSheet.create({
   followBtn: {
     width: 120,
     alignSelf: 'flex-start',
+  },
+  barcodeCameraBody: {
+    height: '90%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  barcodeCameraFill: {
+    height: '90%',
+    width: '100%',
+  },
+  barcodeCameraFooter: {
+    paddingHorizontal: 10,
+    borderTopWidth: 1,
+    borderColor: 'rgb(240, 240, 240)',
+    paddingBottom: 5,
+    height: '10%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dialog: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    marginTop: 10,
   },
 });
 
