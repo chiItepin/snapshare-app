@@ -8,6 +8,9 @@
 
 <img src="https://i.imgur.com/2YjxYYO.jpg" style="width: 250px">
 
+## demo
+https://expo.dev/accounts/chiltepin/projects/snapshare-app
+
 ## prerequisites
 - Expo account for deployments
 - Node.js in local machine
