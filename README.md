@@ -1,6 +1,6 @@
 # snapshare-app
 
-<img src="https://i.imgur.com/7G0EOGp.png" style="width: 250px">
+<img src="https://i.imgur.com/J6OV9WQ.png" style="width: 250px">
 
 <img src="https://i.imgur.com/0xFQJ8a.png" style="width: 250px">
 
@@ -9,7 +9,7 @@
 <img src="https://i.imgur.com/2YjxYYO.jpg" style="width: 250px">
 
 ## demo
-https://expo.dev/accounts/chiltepin/projects/snapshare-app
+https://expo.dev/@chiltepin/snapshare-app
 
 ## prerequisites
 - Expo account for deployments

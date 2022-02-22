@@ -1,0 +1,479 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Account renders and handles events 1`] = `
+<RCTScrollView
+  contentContainerStyle={
+    Object {
+      "flexGrow": 1,
+    }
+  }
+>
+  <View>
+    <View
+      style={
+        Object {
+          "alignItems": "flex-start",
+          "flex": 1,
+          "justifyContent": "flex-start",
+          "padding": 12,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "backgroundColor": "rgb(240, 241, 244)",
+            "borderRadius": 25,
+            "marginBottom": 15,
+            "marginTop": 5,
+            "paddingHorizontal": 15,
+            "paddingVertical": 15,
+            "width": "100%",
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            Object {
+              "selected": undefined,
+            }
+          }
+          activeOpacity={0.6}
+          delayPressIn={10}
+          enableShadow={true}
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              Object {},
+              Object {},
+              Object {},
+              Array [
+                Object {
+                  "borderRadius": 12,
+                  "height": undefined,
+                  "overflow": "visible",
+                  "width": undefined,
+                },
+                Object {
+                  "borderRadius": 12,
+                },
+                Object {
+                  "elevation": 2,
+                },
+                Object {
+                  "shadowColor": "#A6ACB1",
+                  "shadowOffset": Object {
+                    "height": 5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.25,
+                  "shadowRadius": 12,
+                },
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                },
+                undefined,
+                Object {
+                  "alignItems": "center",
+                  "marginBottom": 10,
+                },
+              ],
+            ]
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "marginTop": 5,
+              }
+            }
+          >
+            <View
+              accessibilityLabel="Avatar"
+              accessibilityRole="button"
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "borderRadius": 30,
+                  "height": 60,
+                  "justifyContent": "center",
+                  "opacity": 1,
+                  "width": 60,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    Object {},
+                    Object {},
+                    Object {},
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "borderRadius": 30,
+                        "bottom": 0,
+                        "justifyContent": "center",
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      },
+                      Object {
+                        "backgroundColor": "#FFF9E4",
+                      },
+                      false,
+                    ],
+                  ]
+                }
+                testID="undefined.container"
+              >
+                <Text
+                  numberOfLines={1}
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "transparent",
+                        "textAlign": "left",
+                      },
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      Object {},
+                      undefined,
+                      undefined,
+                      undefined,
+                      Array [
+                        Object {
+                          "fontSize": 19.2,
+                        },
+                        Object {
+                          "backgroundColor": "transparent",
+                          "color": "#20303C",
+                          "lineHeight": undefined,
+                        },
+                        Object {
+                          "color": "#20303C",
+                        },
+                      ],
+                    ]
+                  }
+                  testID="undefined.label"
+                >
+                  L
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            bg-white={true}
+            content={
+              Array [
+                Object {
+                  "grey10": true,
+                  "text": "lorem@ipsum.com",
+                  "text70": true,
+                },
+                Object {
+                  "grey50": true,
+                  "text": "Logged: 123123",
+                  "text90": true,
+                },
+              ]
+            }
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                },
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                Object {},
+                Object {},
+                Array [
+                  Object {
+                    "overflow": "hidden",
+                  },
+                  Object {
+                    "borderBottomLeftRadius": undefined,
+                    "borderBottomRightRadius": undefined,
+                    "borderTopLeftRadius": undefined,
+                    "borderTopRightRadius": undefined,
+                  },
+                  Object {
+                    "padding": 20,
+                  },
+                ],
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Object {},
+                  Object {},
+                  Object {},
+                  Array [
+                    undefined,
+                  ],
+                ]
+              }
+              testID="undefined.contentContainer"
+            >
+              <Text
+                grey10={true}
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                      "textAlign": "left",
+                    },
+                    Object {
+                      "fontFamily": "System",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "lineHeight": 24,
+                    },
+                    Object {
+                      "color": "#20303C",
+                    },
+                    undefined,
+                    undefined,
+                    Object {},
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+                testID="undefined.text.0"
+                text70={true}
+              >
+                lorem@ipsum.com
+              </Text>
+              <Text
+                grey50={true}
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                      "textAlign": "left",
+                    },
+                    Object {
+                      "fontFamily": "System",
+                      "fontSize": 12,
+                      "fontWeight": "700",
+                      "lineHeight": 16,
+                    },
+                    Object {
+                      "color": "#D2D6D8",
+                    },
+                    undefined,
+                    undefined,
+                    Object {},
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+                testID="undefined.text.1"
+                text90={true}
+              >
+                Logged: 123123
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "paddingHorizontal": 24,
+                },
+                Object {
+                  "paddingBottom": 12,
+                },
+              ]
+            }
+          >
+            <View
+              accessibilityRole="button"
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onLayout={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "transparent",
+                  "borderColor": "#5A48F5",
+                  "borderRadius": 6,
+                  "borderWidth": 1,
+                  "elevation": 2,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "minWidth": 90,
+                  "opacity": 1,
+                  "paddingHorizontal": 19,
+                  "paddingVertical": 8.5,
+                  "shadowColor": "transparent",
+                  "shadowOffset": Object {
+                    "height": 5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.35,
+                  "shadowRadius": 9.5,
+                }
+              }
+            >
+              <Text
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                      "textAlign": "left",
+                    },
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    Object {},
+                    undefined,
+                    undefined,
+                    undefined,
+                    Array [
+                      Object {
+                        "backgroundColor": "transparent",
+                        "flex": 0,
+                        "flexDirection": "row",
+                        "fontFamily": "System",
+                        "fontSize": 16,
+                        "fontWeight": "400",
+                        "lineHeight": 24,
+                      },
+                      Object {
+                        "color": "#5A48F5",
+                      },
+                      Object {},
+                      Object {},
+                      undefined,
+                    ],
+                  ]
+                }
+                testID="undefined.label"
+              >
+                View profile
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          accessibilityRole="button"
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onLayout={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#000000",
+              "borderRadius": 6,
+              "elevation": 2,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "minWidth": 90,
+              "opacity": 1,
+              "paddingHorizontal": 20,
+              "paddingVertical": 9.5,
+              "shadowColor": "#000000",
+              "shadowOffset": Object {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.35,
+              "shadowRadius": 9.5,
+            }
+          }
+        >
+          <Text
+            numberOfLines={1}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "textAlign": "left",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  Object {
+                    "backgroundColor": "transparent",
+                    "flex": 0,
+                    "flexDirection": "row",
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                  },
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {},
+                  Object {},
+                  undefined,
+                ],
+              ]
+            }
+            testID="undefined.label"
+          >
+            Logout
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;

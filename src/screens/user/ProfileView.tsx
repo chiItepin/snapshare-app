@@ -3,6 +3,7 @@ import {
   Share,
   SafeAreaView,
   Platform,
+  Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -234,7 +235,7 @@ const ProfileView: FunctionComponent<IProps> = ({
   ), [selectedUser, followers, selectedUserFollowersCount]);
 
   const renderFooter = React.useCallback(() => (
-    <View style={(Platform.OS === 'android') ? { marginBottom: 45 } : [helperStyles.marginBottomBig]}>
+    <View style={{ marginBottom: 65 }}>
       {(nextPage !== 1 && nextPage !== null) && (
         <Button
           onPress={() => handleGetUserPosts(true, nextPage)}
@@ -280,7 +281,7 @@ const ProfileView: FunctionComponent<IProps> = ({
         message={notificationMessage}
       />
 
-      <View style={{ height: '100%' }}>
+      <View style={{ height: Dimensions.get('window').height }}>
         <FlatPostsList
           posts={posts}
           navigation={navigation}

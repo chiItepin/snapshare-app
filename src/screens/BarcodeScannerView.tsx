@@ -32,7 +32,7 @@ const BarcodeScannerView: FunctionComponent = () => {
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
+    <>
       <Toast
         visible={!!alertNotificationMessage}
         position="bottom"
@@ -74,30 +74,41 @@ const BarcodeScannerView: FunctionComponent = () => {
         </View>
       </Dialog>
 
-      <View>
-        {(!hasPermission) && <Text style={HelperStyles.textCenter}>No access to camera</Text>}
+      {(!hasPermission) && <Text style={HelperStyles.textCenter}>No access to camera</Text>}
 
-        <View style={styles.barcodeCameraBody}>
-          <BarCodeScanner
-            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-            barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
-            style={[styles.barcodeCameraFill]}
-          />
-        </View>
+      <BarCodeScanner
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+        style={[styles.barcodeCameraFill]}
+      >
+        <>
+          <View style={styles.barcodeCameraBody}>
 
-        <View style={styles.barcodeCameraFooter}>
-          <View style={HelperStyles['w-75']}>
-            <Button
-              disabled={!scanned}
-              borderRadius={6}
-              enableShadow
-              label={!scanned ? 'Scanning' : 'Tap to Scan Again'}
-              onPress={() => { setScanned(false); setScannedOutput(''); }}
-            />
+            {/* {!scanned && (
+              <View style={styles.scannerUpperContainer}>
+                <View style={styles.scannerUpperLeft} />
+                <View style={styles.scannerUpperRight} />
+                <View style={styles.scannerLowerLeft} />
+                <View style={styles.scannerLowerRight} />
+              </View>
+            )} */}
+
           </View>
-        </View>
-      </View>
-    </View>
+
+          <View style={styles.barcodeCameraFooter}>
+            <View style={HelperStyles['w-75']}>
+              <Button
+                disabled={!scanned}
+                borderRadius={6}
+                enableShadow
+                label={!scanned ? 'Scanning' : 'Tap to Scan Again'}
+                onPress={() => { setScanned(false); setScannedOutput(''); }}
+              />
+            </View>
+          </View>
+        </>
+      </BarCodeScanner>
+    </>
   );
 };
 

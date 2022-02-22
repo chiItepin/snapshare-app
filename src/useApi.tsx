@@ -12,6 +12,8 @@ interface IRequestPosts {
   togglePostLike: (postId: string) => Promise<AxiosResponse<any>>;
   getPosts: (page: number) => Promise<AxiosResponse<any>>;
   getPost: (postId: string) => Promise<AxiosResponse<any>>;
+  deletePost: (postId: string) => Promise<AxiosResponse<any>>;
+  searchPost: (searchQuery: string, page: number) => Promise<AxiosResponse<any>>;
   createPostComment: (postId: string, content: string) => Promise<AxiosResponse<any>>;
 }
 
@@ -96,6 +98,12 @@ const useApi = (): IApi => {
       headers,
     }),
     getPost: (postId: string): Promise<AxiosResponse<any>> => axios.get(`${baseUrl}/api/posts/${postId}`, {
+      headers,
+    }),
+    searchPost: (searchQuery: string, page: number): Promise<AxiosResponse<any>> => axios.get(`${baseUrl}/api/posts/search/${searchQuery}?page=${page}`, {
+      headers,
+    }),
+    deletePost: (postId: string): Promise<AxiosResponse<any>> => axios.delete(`${baseUrl}/api/posts/${postId}`, {
       headers,
     }),
     createPost: (content: string, images: IImage[]): Promise<AxiosResponse<any>> => axios.post(`${baseUrl}/api/posts`, {

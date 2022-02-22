@@ -10864,6 +10864,7 @@ __metadata:
     react-redux: ^7.2.4
     redux: ^4.1.1
     typescript: ~4.0.0
+    uri-scheme: ^1.0.114
   languageName: unknown
   linkType: soft
 
@@ -12274,6 +12275,15 @@ __metadata:
   dependencies:
     punycode: ^2.1.0
   checksum: 7167432de6817fe8e9e0c9684f1d2de2bb688c94388f7569f7dbdb1587c9f4ca2a77962f134ec90be0cc4d004c939ff0d05acc9f34a0db39a3c797dada262633
+  languageName: node
+  linkType: hard
+
+"uri-scheme@npm:^1.0.114":
+  version: 1.0.114
+  resolution: "uri-scheme@npm:1.0.114"
+  bin:
+    uri-scheme: cli.js
+  checksum: 5542e8d284f72e0fa840d3ec76d18b7aa5dd98d0b2a9cff6fbb789698848b9f14ac3c3a874710c42aa92263c54bdcb27e5b539dd99ac40a4dd42c364364b7c78
   languageName: node
   linkType: hard
 

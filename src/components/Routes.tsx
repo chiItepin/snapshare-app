@@ -102,8 +102,8 @@ const PostsStack: FunctionComponent<IPropsStack> = ({ navigation }: IPropsStack)
     screenOptions={stackOptions(navigation)}
   >
     <Stack.Screen name="PostsList" component={PostsList} options={{ title: 'Home' }} />
-    <Stack.Screen name="PostView" component={PostView} options={{ title: 'Viewing Post' }} />
-    <Stack.Screen name="ProfileView" component={ProfileView} options={{ title: 'Viewing profile' }} />
+    <Stack.Screen name="PostView" component={PostView} options={{ title: 'Snap' }} />
+    <Stack.Screen name="ProfileView" component={ProfileView} options={{ title: 'Profile' }} />
   </Stack.Navigator>
 );
 
@@ -112,7 +112,7 @@ const LoginStack: FunctionComponent<IPropsStack> = ({ navigation }: IPropsStack)
     initialRouteName="Login"
     screenOptions={stackOptions(navigation)}
   >
-    <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
+    <Stack.Screen name="Login" component={Login} options={{ title: 'Home' }} />
     <Stack.Screen name="SignUpView" component={SignUpView} options={{ title: 'Sign Up' }} />
   </Stack.Navigator>
 );
@@ -123,7 +123,7 @@ const AccountStack: FunctionComponent<IPropsStack> = ({ navigation }: IPropsStac
     screenOptions={stackOptions(navigation)}
   >
     <Stack.Screen name="Account" component={Account} options={{ title: 'Account' }} />
-    <Stack.Screen name="ProfileView" component={ProfileView} options={{ title: 'Viewing profile' }} />
+    <Stack.Screen name="ProfileView" component={ProfileView} options={{ title: 'Profile' }} />
   </Stack.Navigator>
 );
 

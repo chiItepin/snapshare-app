@@ -25,6 +25,7 @@ interface IProps {
   handlePostLike: (postId: string) => void;
   handlePostShare: (postId: string) => void;
   hasRedirectToPostView?: boolean;
+  handleLongPress?: (postId: string) => void;
 }
 
 const Post: FunctionComponent<IProps> = ({
@@ -33,6 +34,7 @@ const Post: FunctionComponent<IProps> = ({
   handlePostLike,
   handlePostShare,
   hasRedirectToPostView,
+  handleLongPress,
 }: IProps) => {
   const user = useSelector((state: IState) => state.user);
 
@@ -49,6 +51,15 @@ const Post: FunctionComponent<IProps> = ({
       onPress={hasRedirectToPostView ? () => navigation.navigate('PostView', {
         postId: item._id,
       }) : undefined}
+      onLongPress={
+        hasRedirectToPostView
+          ? () => {
+            if (handleLongPress && item.authorId?._id && (user._id === item.authorId?._id)) {
+              handleLongPress(item._id);
+            }
+          }
+          : undefined
+      }
     >
 
       <View style={styles.postHeaderContainer}>
@@ -169,6 +180,7 @@ const arePropsEqual = (prevProps: IProps, nextProps: IProps) => (
 
 Post.defaultProps = {
   hasRedirectToPostView: true,
+  handleLongPress: () => undefined,
 };
 
 export default React.memo(Post, arePropsEqual);

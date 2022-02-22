@@ -17,7 +17,7 @@ export interface IActions {
   payload: any;
 }
 
-const initialState: IState = {
+export const initialState: IState = {
   user: {
     _id: '',
     email: '',
@@ -31,7 +31,7 @@ const initialState: IState = {
 };
 
 const Reducer = (state: IState = initialState, action: IActions): IState => {
-  switch (action.type) {
+  switch (action?.type || '') {
     case 'SET_USER':
       return {
         ...state,

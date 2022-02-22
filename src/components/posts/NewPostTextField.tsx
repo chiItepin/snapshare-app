@@ -7,9 +7,11 @@ import {
 } from 'react-native';
 import {
   Modal,
-  Button,
   Incubator,
   Image,
+  FloatingButton,
+  Assets,
+  Colors,
 } from 'react-native-ui-lib';
 import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker';
 import styles from '../../styles/GlobalStyles';
@@ -72,25 +74,6 @@ const NewPostTextField: FunctionComponent<IProps> = ({
     <Modal visible={isVisible} animationType="slide">
       <SafeAreaView style={[styles.container, HelperStyles.marginHorizontalMed]}>
         <View style={[styles.newPostTextFieldContainer, { flex: 1 }]}>
-          <View style={[HelperStyles['w-50'], HelperStyles.paddingRightMed]}>
-            <Button
-              onPress={() => setIsNewPostTextFieldVisible(false)}
-              label="Close"
-              outline
-              borderRadius={6}
-            />
-          </View>
-
-          <View style={[HelperStyles['w-50'], HelperStyles.paddingLeftMed]}>
-            <Button
-              onPress={onSubmit}
-              label="Submit"
-              enableShadow
-              borderRadius={6}
-              disabled={value.length === 0}
-            />
-          </View>
-
           <View style={[
             HelperStyles['w-100'],
             HelperStyles.marginBottomBig,
@@ -145,6 +128,21 @@ const NewPostTextField: FunctionComponent<IProps> = ({
             )))}
           </ScrollView>
         </View>
+
+        <FloatingButton
+          visible
+          button={{
+            label: 'Snap',
+            iconSource: Assets.icons.plusSmall,
+            disabled: value.length === 0,
+            onPress: () => onSubmit(),
+          }}
+          secondaryButton={{
+            label: 'Close',
+            color: Colors.red40,
+            onPress: () => setIsNewPostTextFieldVisible(false),
+          }}
+        />
       </SafeAreaView>
     </Modal>
   );

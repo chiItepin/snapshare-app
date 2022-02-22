@@ -25,6 +25,7 @@ interface IProps {
   handlePostLike: (postId: string) => void;
   handlePostShare: (postId: string) => void;
   onScroll?: null|((event: NativeSyntheticEvent<NativeScrollEvent>) => void)
+  handleLongPress?: (postId: string) => void;
 }
 
 interface IRenderPostProps {
@@ -32,6 +33,7 @@ interface IRenderPostProps {
   navigation: NavigationProp<RootScreenParams>;
   handlePostLike: (postId: string) => void;
   handlePostShare: (postId: string) => void;
+  handleLongPress?: (postId: string) => void;
 }
 
 const RenderPost: FunctionComponent<IRenderPostProps> = ({
@@ -39,16 +41,22 @@ const RenderPost: FunctionComponent<IRenderPostProps> = ({
   navigation,
   handlePostLike,
   handlePostShare,
+  handleLongPress,
 }: IRenderPostProps) => (
   <View key={item._id} style={styles.card}>
     <Post
       item={item}
       handlePostLike={handlePostLike}
       handlePostShare={handlePostShare}
+      handleLongPress={handleLongPress}
       navigation={navigation}
     />
   </View>
 );
+
+RenderPost.defaultProps = {
+  handleLongPress: () => undefined,
+};
 
 const arePropsEqual = (prevProps: IRenderPostProps, nextProps: IRenderPostProps) => (
   prevProps.item._id === nextProps.item._id
@@ -68,6 +76,7 @@ const FlatPostsList: FunctionComponent<IProps> = ({
   handleGetPosts,
   handlePostLike,
   handlePostShare,
+  handleLongPress,
   onScroll = null,
 }: IProps) => (
   <FlatList
@@ -80,6 +89,7 @@ const FlatPostsList: FunctionComponent<IProps> = ({
       <MemoizedRenderPost
         handlePostLike={handlePostLike}
         handlePostShare={handlePostShare}
+        handleLongPress={handleLongPress}
         item={item}
         navigation={navigation}
       />
@@ -95,6 +105,7 @@ const FlatPostsList: FunctionComponent<IProps> = ({
 
 FlatPostsList.defaultProps = {
   onScroll: null,
+  handleLongPress: () => undefined,
 };
 
 export default FlatPostsList;

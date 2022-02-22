@@ -71,174 +71,6 @@ exports[`NewPostTextField renders and handles events 1`] = `
           style={
             Array [
               Object {
-                "width": "50%",
-              },
-              Object {
-                "paddingRight": 12,
-              },
-            ]
-          }
-        >
-          <View
-            accessibilityRole="button"
-            accessible={true}
-            focusable={true}
-            onClick={[Function]}
-            onLayout={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "transparent",
-                "borderColor": "#5A48F5",
-                "borderRadius": 6,
-                "borderWidth": 1,
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "minWidth": 90,
-                "opacity": 1,
-                "paddingHorizontal": 19,
-                "paddingVertical": 8.5,
-              }
-            }
-          >
-            <Text
-              numberOfLines={1}
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                    "textAlign": "left",
-                  },
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "flex": 0,
-                      "flexDirection": "row",
-                      "fontFamily": "System",
-                      "fontSize": 16,
-                      "fontWeight": "400",
-                      "lineHeight": 24,
-                    },
-                    Object {
-                      "color": "#5A48F5",
-                    },
-                    Object {},
-                    Object {},
-                    undefined,
-                  ],
-                ]
-              }
-              testID="undefined.label"
-            >
-              Close
-            </Text>
-          </View>
-        </View>
-        <View
-          style={
-            Array [
-              Object {
-                "width": "50%",
-              },
-              Object {
-                "paddingLeft": 12,
-              },
-            ]
-          }
-        >
-          <View
-            accessibilityRole="button"
-            accessible={true}
-            focusable={true}
-            onClick={[Function]}
-            onLayout={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#5A48F5",
-                "borderRadius": 6,
-                "elevation": 2,
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "minWidth": 90,
-                "opacity": 1,
-                "paddingHorizontal": 20,
-                "paddingVertical": 9.5,
-                "shadowColor": "#5A48F5",
-                "shadowOffset": Object {
-                  "height": 5,
-                  "width": 0,
-                },
-                "shadowOpacity": 0.35,
-                "shadowRadius": 9.5,
-              }
-            }
-          >
-            <Text
-              numberOfLines={1}
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                    "textAlign": "left",
-                  },
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "flex": 0,
-                      "flexDirection": "row",
-                      "fontFamily": "System",
-                      "fontSize": 16,
-                      "fontWeight": "400",
-                      "lineHeight": 24,
-                    },
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {},
-                    Object {},
-                    undefined,
-                  ],
-                ]
-              }
-              testID="undefined.label"
-            >
-              Submit
-            </Text>
-          </View>
-        </View>
-        <View
-          style={
-            Array [
-              Object {
                 "width": "100%",
               },
               Object {
@@ -414,7 +246,7 @@ exports[`NewPostTextField renders and handles events 1`] = `
           Array [
             Object {
               "height": 65,
-              "marginBottom": 20,
+              "marginBottom": 80,
               "width": "100%",
             },
           ]
@@ -490,6 +322,251 @@ exports[`NewPostTextField renders and handles events 1`] = `
             </View>
           </View>
         </RCTScrollView>
+      </View>
+      <View
+        animated={true}
+        pointerEvents="box-none"
+        style={
+          Object {
+            "alignItems": "center",
+            "bottom": 0,
+            "left": 0,
+            "opacity": 1,
+            "position": "absolute",
+            "right": 0,
+            "top": undefined,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
+            "zIndex": undefined,
+          }
+        }
+      >
+        <View
+          pointerEvents="none"
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              Object {},
+              Object {},
+              Object {},
+              Object {
+                "bottom": 0,
+                "height": "100%",
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "width": "100%",
+              },
+            ]
+          }
+        >
+          <Image
+            accessibilityRole="image"
+            accessible={false}
+            assetGroup="icons"
+            onError={[Function]}
+            resizeMode="stretch"
+            source={1}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                Object {
+                  "bottom": 0,
+                  "height": "100%",
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                  "width": "100%",
+                },
+                false,
+              ]
+            }
+          />
+        </View>
+        <View
+          accessibilityRole="button"
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onLayout={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#5A48F5",
+              "borderRadius": 999,
+              "elevation": 2,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginBottom": 16,
+              "marginTop": 16,
+              "minWidth": 90,
+              "opacity": 1,
+              "paddingHorizontal": 20,
+              "paddingVertical": 9.5,
+              "shadowColor": "#A6ACB1",
+              "shadowOffset": Object {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.35,
+              "shadowRadius": 12,
+            }
+          }
+          testID="undefined.button"
+        >
+          <Image
+            accessibilityRole="image"
+            accessible={false}
+            assetGroup="icons"
+            onError={[Function]}
+            source={1}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                Array [
+                  Object {
+                    "marginRight": 8,
+                    "tintColor": "#FFFFFF",
+                  },
+                  undefined,
+                ],
+                false,
+              ]
+            }
+            testID="undefined.button.icon"
+          />
+          <Text
+            numberOfLines={1}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "textAlign": "left",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  Object {
+                    "backgroundColor": "transparent",
+                    "flex": 0,
+                    "flexDirection": "row",
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                  },
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {},
+                  Object {},
+                  undefined,
+                ],
+              ]
+            }
+            testID="undefined.button.label"
+          >
+            Snap
+          </Text>
+        </View>
+        <View
+          accessibilityRole="button"
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onLayout={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "transparent",
+              "borderRadius": 0,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginBottom": 28,
+              "minWidth": undefined,
+              "opacity": 1,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+            }
+          }
+          testID="undefined.secondaryButton"
+        >
+          <Text
+            numberOfLines={1}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "textAlign": "left",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  Object {
+                    "backgroundColor": "transparent",
+                    "flex": 0,
+                    "flexDirection": "row",
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                  },
+                  Object {
+                    "color": "#FD7267",
+                  },
+                  Object {},
+                  Object {},
+                  undefined,
+                ],
+              ]
+            }
+            testID="undefined.secondaryButton.label"
+          >
+            Close
+          </Text>
+        </View>
       </View>
     </RCTSafeAreaView>
   </View>

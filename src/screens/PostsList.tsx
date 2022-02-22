@@ -7,8 +7,11 @@ import {
 } from 'react-native';
 import {
   Toast,
-  TextField,
+  Incubator,
   Button,
+  ActionSheet,
+  FloatingButton,
+  Assets,
 } from 'react-native-ui-lib';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -32,14 +35,19 @@ interface IImage {
   url: string;
 }
 
+const { TextField } = Incubator;
+
 const PostsList: FunctionComponent<IProps> = ({
   navigation,
   clearUser,
 }: IProps) => {
   const [posts, setPosts] = useState<IPost[]>([]);
+  const [arePostsQueried, setArePostsQueried] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedPostId, setSelectedPostId] = useState('');
   const [newContent, setNewContent] = useState('');
+  const [searchValue, setSearchValue] = useState('');
   const [images, setImages] = useState<IImage[]>([]);
   const [isNewPostTextFieldVisible, setIsNewPostTextFieldVisible] = useState(false);
   const [nextPage, setNextPage] = useState(1);
@@ -47,6 +55,7 @@ const PostsList: FunctionComponent<IProps> = ({
   const { fetchPosts, apiLoaded } = useApi();
 
   const handleGetPosts = (loadMore?: boolean, page = 1): void => {
+    setArePostsQueried(false);
     setLoaded(false);
     setLoading(true);
     setNotificationMessage('Loading...');
@@ -76,6 +85,32 @@ const PostsList: FunctionComponent<IProps> = ({
     });
   };
 
+  const handleSearchPosts = (loadMore?: boolean, page = 1): void => {
+    setArePostsQueried(true);
+    setLoaded(false);
+    setLoading(true);
+    setNotificationMessage('Loading...');
+    setNextPage(page);
+    if (loadMore === false) {
+      setPosts([]);
+    }
+    fetchPosts.searchPost(searchValue, page).then((res: AxiosResponse<any>) => {
+      setLoading(false);
+      setLoaded(true);
+      if (loadMore === false) {
+        setPosts(res.data.data.docs);
+      } else {
+        setPosts(posts.concat(res.data.data.docs));
+      }
+      setNextPage(res.data.data.nextPage);
+      setNotificationMessage('');
+    }).catch(() => {
+      setNotificationMessage('Unknown error');
+      setLoaded(true);
+      setLoading(false);
+    });
+  };
+
   const handleSubmitPost = (): void => {
     setIsNewPostTextFieldVisible(false);
     setNotificationMessage('Uploading...');
@@ -93,35 +128,53 @@ const PostsList: FunctionComponent<IProps> = ({
   };
 
   const renderCreatePost = () => (
-    <View style={[HelperStyles.paddingHorizontalMed, HelperStyles.paddingVerticalTopMed]}>
-      <TextField
-        placeholder="Enter your message"
-        value={newContent}
-        onChangeText={setNewContent}
-        onToggleExpandableModal={(event: boolean) => setIsNewPostTextFieldVisible(event)}
-        editable={loaded}
-        renderExpandable={() => (
-          <NewPostTextField
-            isVisible={isNewPostTextFieldVisible}
-            setIsNewPostTextFieldVisible={setIsNewPostTextFieldVisible}
-            value={newContent}
-            onChange={setNewContent}
-            onSubmit={handleSubmitPost}
-            setNotificationMessage={setNotificationMessage}
-            setImages={setImages}
-            images={images}
-          />
-        )}
-        expandable
-      />
+    <View style={[HelperStyles.paddingVerticalMed]}>
+      <View>
+        <TextField
+          placeholder="Search snap..."
+          value={searchValue}
+          onChangeText={setSearchValue}
+          editable={loaded}
+          fieldStyle={styles.searchField}
+          onSubmitEditing={() => {
+            if (searchValue) {
+              handleSearchPosts(false);
+            } else {
+              handleGetPosts(false);
+            }
+          }}
+        />
+
+        <Button
+          onPress={() => {
+            if (searchValue) {
+              handleSearchPosts(false);
+            } else {
+              handleGetPosts(false);
+            }
+          }}
+          style={styles.searchFieldBtn}
+          iconSource={Assets.icons.search}
+          iconStyle={styles.searchFieldBtnIcon}
+          color="white"
+          disabled={!loaded}
+          enableShadow
+        />
+      </View>
     </View>
   );
 
   const renderFooter = () => (
-    <View style={[HelperStyles.marginBottomBig]}>
+    <View style={{ marginBottom: 100 }}>
       {nextPage !== 1 && (
         <Button
-          onPress={() => handleGetPosts(true, nextPage)}
+          onPress={() => {
+            if (arePostsQueried) {
+              handleSearchPosts(true, nextPage);
+            } else {
+              handleGetPosts(true, nextPage);
+            }
+          }}
           label="Load more"
           disabled={loading || nextPage === null}
           enableShadow
@@ -130,6 +183,18 @@ const PostsList: FunctionComponent<IProps> = ({
       )}
     </View>
   );
+
+  const handleDeletePost = (postId: string): void => {
+    setNotificationMessage('Deleting post...');
+    fetchPosts.deletePost(postId)
+      .then(() => {
+        setPosts((prevState) => prevState.filter((post) => post._id !== postId));
+        setNotificationMessage('');
+      })
+      .catch((err) => {
+        setNotificationMessage(handleAxiosErrorMessage(err));
+      });
+  };
 
   const handlePostLike = (postId: string): void => {
     setNotificationMessage('Sending your like...');
@@ -177,6 +242,29 @@ const PostsList: FunctionComponent<IProps> = ({
         message={notificationMessage}
       />
 
+      <NewPostTextField
+        isVisible={isNewPostTextFieldVisible}
+        setIsNewPostTextFieldVisible={setIsNewPostTextFieldVisible}
+        value={newContent}
+        onChange={setNewContent}
+        onSubmit={handleSubmitPost}
+        setNotificationMessage={setNotificationMessage}
+        setImages={setImages}
+        images={images}
+      />
+
+      <ActionSheet
+        title="Options"
+        message="Message goes here"
+        onDismiss={() => setSelectedPostId('')}
+        visible={!!selectedPostId}
+        options={[
+          { label: 'Delete', onPress: () => handleDeletePost(selectedPostId) },
+          { label: 'Send like', onPress: () => handlePostLike(selectedPostId) },
+          { label: 'Cancel', onPress: () => setSelectedPostId('') },
+        ]}
+      />
+
       <FlatPostsList
         posts={posts}
         navigation={navigation}
@@ -186,6 +274,17 @@ const PostsList: FunctionComponent<IProps> = ({
         handleGetPosts={handleGetPosts}
         handlePostLike={handlePostLike}
         handlePostShare={handlePostShare}
+        handleLongPress={(postId) => setSelectedPostId(postId)}
+      />
+
+      <FloatingButton
+        visible
+        button={{
+          label: 'Snap',
+          iconSource: Assets.icons.plusSmall,
+          onPress: () => setIsNewPostTextFieldVisible(true),
+          disabled: !loaded,
+        }}
       />
     </View>
   );

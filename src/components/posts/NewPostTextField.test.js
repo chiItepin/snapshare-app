@@ -22,7 +22,7 @@ test('NewPostTextField renders and handles events', () => {
   const textArea = component.getByDisplayValue(props.value);
   fireEvent.changeText(textArea, 'ipsum');
 
-  const submitButton = component.getByText('Submit');
+  const submitButton = component.getByText('Snap');
   fireEvent.press(submitButton);
 
   const cancelButton = component.getByText('Close');

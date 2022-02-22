@@ -5,6 +5,7 @@ import { createStore } from 'redux';
 import AppReducer from './src/reducer';
 import Navigation from './src/components/Routes';
 import UserPlaceholder from './src/components/UserPlaceholder';
+import linking from './linking';
 
 const store = createStore(AppReducer);
 
@@ -12,7 +13,7 @@ const App:FunctionComponent = () => (
   <Provider store={store}>
     <UserPlaceholder />
 
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <Navigation />
     </NavigationContainer>
   </Provider>
